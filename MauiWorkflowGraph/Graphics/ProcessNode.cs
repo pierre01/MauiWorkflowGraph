@@ -95,11 +95,14 @@ public class SequenceNode : ProcessNode
                 canvas.FillColor = Colors.LightGray;
                 canvas.SaveState();
                 canvas.Translate(cx, endY);
-                //canvas.DrawPath(new PathF()
-                //    .MoveTo(0, 0)
-                //    .LineTo(-4, -6)
-                //    .LineTo(4, -6)
-                //    .Close());
+                        PathF path = new PathF();
+path.MoveTo(0, 0);
+path.LineTo(-4, -6);
+path.LineTo(4, -6);
+path.Close();
+//canvas.StrokeColor = Colors.Green;
+//canvas.StrokeSize = 6;
+canvas.DrawPath(path);
                 canvas.RestoreState();
             }
 
@@ -157,6 +160,14 @@ public class ParallelNode : ProcessNode
             canvas.FillColor = Colors.LightGray;
             canvas.SaveState();
             canvas.Translate(arrowX, b.Bounds.Y);
+                        PathF path = new PathF();
+path.MoveTo(0, 0);
+path.LineTo(-4, -6);
+path.LineTo(4, -6);
+path.Close();
+//canvas.StrokeColor = Colors.Green;
+//canvas.StrokeSize = 6;
+canvas.DrawPath(path);
             //canvas.DrawPath(new PathF()
             //    .MoveTo(0, 0)
             //    .LineTo(-4, -6)
@@ -170,6 +181,14 @@ public class ParallelNode : ProcessNode
             canvas.DrawLine(branchBottomX, branchBottomY, branchBottomX, bottomY);
             canvas.SaveState();
             canvas.Translate(branchBottomX, bottomY);
+            PathF path2 = new PathF();
+//path2.MoveTo(0, 0);
+//path2.LineTo(-4, 6);
+//path2.LineTo(4, 6);
+//path2.Close();
+////canvas.StrokeColor = Colors.Green;
+////canvas.StrokeSize = 6;
+//canvas.DrawPath(path2);
             //canvas.DrawPath(new PathF()
             //    .MoveTo(0, 0)
             //    .LineTo(-4, 6)
