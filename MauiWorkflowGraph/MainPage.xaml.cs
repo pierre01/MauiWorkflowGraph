@@ -14,7 +14,7 @@ public partial class MainPage : ContentPage
     {
         base.OnAppearing();
         // Exemple d’entrée
-        string input = "[A,B,C,([D,C],[C,(C,[A,D])],[B,D,A]),D]";
+        string input = "[Adonis,Brigitte,Charles,([Denis,Chrid],[Claude,(Colby,[Amanda,Dillan])],[Brad,Dick,Angel]),Dorothy]";
         var drawable = (GraphRenderer) myGraphicsView.Drawable;
         drawable.UpdateGraph(input);
         myGraphicsView.Invalidate();
