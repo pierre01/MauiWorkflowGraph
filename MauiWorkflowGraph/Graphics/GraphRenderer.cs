@@ -20,6 +20,12 @@ public class GraphRenderer : IDrawable
         _input = newInput;
         _root = ProcessParser.Parse(_input);
     }
+
+    // Méthode publique pour le hit‑test
+    public ProcessNode HitTest(PointF point)
+        => _root?.HitTest(point);
+
+
     public void Draw(ICanvas canvas, RectF dirtyRect)
     {
         // mesurer et centrer

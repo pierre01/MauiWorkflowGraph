@@ -16,7 +16,7 @@ public abstract class ProcessNode
     protected float FontSize = 18;
     protected IFont Font = new Microsoft.Maui.Graphics.Font("Arial");
     protected float Density = (float)DeviceDisplay.Current.MainDisplayInfo.Density;
-
+    public abstract ProcessNode HitTest(PointF point);
 }
 
 public class LeafNode : ProcessNode
@@ -32,7 +32,7 @@ public class LeafNode : ProcessNode
 
         var textSize = canvas.GetStringSize(Name, Font, FontSize);
 
-        return new SizeF(textSize.Width*Density + 24, textSize.Height*Density + 32);
+        return new SizeF(textSize.Width * Density + 24, textSize.Height * Density + 32);
     }
     public override void Draw(ICanvas canvas)
     {
@@ -45,7 +45,11 @@ public class LeafNode : ProcessNode
         var textSize = canvas.GetStringSize(Name, Font, FontSize);
         float x = Bounds.X + (Bounds.Width - textSize.Width) / 2;
         float y = Bounds.Y + (Bounds.Height - textSize.Height) / 2;
-        canvas.DrawString(Name, x, y, textSize.Width*Density, textSize.Height*Density, HorizontalAlignment.Left, VerticalAlignment.Top);
+        canvas.DrawString(Name, x, y, textSize.Width * Density, textSize.Height * Density, HorizontalAlignment.Left, VerticalAlignment.Top);
+    }
+    public override ProcessNode HitTest(PointF point)
+    {
+        return Bounds.Contains(point) ? this : null;
     }
 }
 
@@ -95,19 +99,30 @@ public class SequenceNode : ProcessNode
                 canvas.FillColor = Colors.LightGray;
                 canvas.SaveState();
                 canvas.Translate(cx, endY);
-                        PathF path = new PathF();
-path.MoveTo(0, 0);
-path.LineTo(-4, -6);
-path.LineTo(4, -6);
-path.Close();
-//canvas.StrokeColor = Colors.Green;
-//canvas.StrokeSize = 6;
-canvas.DrawPath(path);
+                PathF path = new PathF();
+                path.MoveTo(0, 0);
+                path.LineTo(-4, -6);
+                path.LineTo(4, -6);
+                path.Close();
+                //canvas.StrokeColor = Colors.Green;
+                //canvas.StrokeSize = 6;
+                canvas.DrawPath(path);
                 canvas.RestoreState();
             }
 
             y += size.Height + Spacing;
         }
+    }
+    public override ProcessNode HitTest(PointF point)
+    {
+        // On délègue aux enfants
+        foreach (var child in Children)
+        {
+            var hit = child.HitTest(point);
+            if (hit != null)
+                return hit;
+        }
+        return null;
     }
 }
 
@@ -160,14 +175,14 @@ public class ParallelNode : ProcessNode
             canvas.FillColor = Colors.LightGray;
             canvas.SaveState();
             canvas.Translate(arrowX, b.Bounds.Y);
-                        PathF path = new PathF();
-path.MoveTo(0, 0);
-path.LineTo(-4, -6);
-path.LineTo(4, -6);
-path.Close();
-//canvas.StrokeColor = Colors.Green;
-//canvas.StrokeSize = 6;
-canvas.DrawPath(path);
+            PathF path = new PathF();
+            path.MoveTo(0, 0);
+            path.LineTo(-4, -6);
+            path.LineTo(4, -6);
+            path.Close();
+            //canvas.StrokeColor = Colors.Green;
+            //canvas.StrokeSize = 6;
+            canvas.DrawPath(path);
             //canvas.DrawPath(new PathF()
             //    .MoveTo(0, 0)
             //    .LineTo(-4, -6)
@@ -182,13 +197,13 @@ canvas.DrawPath(path);
             canvas.SaveState();
             canvas.Translate(branchBottomX, bottomY);
             PathF path2 = new PathF();
-//path2.MoveTo(0, 0);
-//path2.LineTo(-4, 6);
-//path2.LineTo(4, 6);
-//path2.Close();
-////canvas.StrokeColor = Colors.Green;
-////canvas.StrokeSize = 6;
-//canvas.DrawPath(path2);
+            //path2.MoveTo(0, 0);
+            //path2.LineTo(-4, 6);
+            //path2.LineTo(4, 6);
+            //path2.Close();
+            ////canvas.StrokeColor = Colors.Green;
+            ////canvas.StrokeSize = 6;
+            //canvas.DrawPath(path2);
             //canvas.DrawPath(new PathF()
             //    .MoveTo(0, 0)
             //    .LineTo(-4, 6)
@@ -198,5 +213,15 @@ canvas.DrawPath(path);
 
             x += size.Width + Spacing;
         }
+    }
+    public override ProcessNode HitTest(PointF point)
+    {
+        foreach (var b in Branches)
+        {
+            var hit = b.HitTest(point);
+            if (hit != null)
+                return hit;
+        }
+        return null;
     }
 }
