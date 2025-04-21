@@ -1,21 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+<ContentPage x:Class="MauiWorkflowGraph.MainPage" xmlns="http://schemas.microsoft.com/dotnet/2021/maui" 
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
 			 xmlns:gr="clr-namespace:MauiWorkflowGraph.Graphics"
-             x:Class="MauiWorkflowGraph.MainPage">
+			 x:DataType="gr:GraphRenderer" >
 
-    <ContentPage.Resources>
-		<gr:GraphRenderer x:Key="WorkflowGraphic" />
-	</ContentPage.Resources>
-	<Grid>
+	<ScrollView HorizontalScrollBarVisibility="Always" Orientation="Both" VerticalScrollBarVisibility="Always">
 
-		<GraphicsView
-			StartInteraction="myGraphicsView_StartInteraction"
-			x:Name="myGraphicsView"
-			Drawable="{StaticResource WorkflowGraphic}"
-			HorizontalOptions="Fill"
-			VerticalOptions="Fill"
-			 />
+		<GraphicsView x:Name="myGraphicsView"
+					  VerticalOptions="Fill"
+					  HorizontalOptions="Fill"
+		              HeightRequest="{Binding ContentHeight}"
+					  StartInteraction="myGraphicsView_StartInteraction"
+		              WidthRequest="{Binding ContentWidth}" />
 
-	</Grid>
+	</ScrollView>
 </ContentPage>

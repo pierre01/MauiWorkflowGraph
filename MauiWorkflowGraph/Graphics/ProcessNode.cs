@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
+
 
 namespace MauiWorkflowGraph.Graphics;
 
@@ -13,8 +13,8 @@ public abstract class ProcessNode
     public RectF Bounds;        // Position et taille calculées
     public abstract SizeF Measure(ICanvas canvas);
     public abstract void Draw(ICanvas canvas);
-    protected float FontSize = 18;
-    protected IFont Font = new Microsoft.Maui.Graphics.Font("Arial");
+    protected float FontSize = 10;
+    protected IFont Font = new Microsoft.Maui.Graphics.Font("OpenSans-Semibold");
     protected float Density = (float)DeviceDisplay.Current.MainDisplayInfo.Density;
     public abstract ProcessNode HitTest(PointF point);
 }
@@ -23,6 +23,7 @@ public class LeafNode : ProcessNode
 {
     public string Name;
     public LeafNode(string name) => Name = name;
+    
     public override SizeF Measure(ICanvas canvas)
     {
         //canvas.DisplayScale = Density;
@@ -32,7 +33,7 @@ public class LeafNode : ProcessNode
 
         var textSize = canvas.GetStringSize(Name, Font, FontSize);
 
-        return new SizeF(textSize.Width * Density + 24, textSize.Height * Density + 32);
+        return new SizeF(textSize.Width + 16 , textSize.Height + 12 );
     }
     public override void Draw(ICanvas canvas)
     {
@@ -104,8 +105,6 @@ public class SequenceNode : ProcessNode
                 path.LineTo(-4, -6);
                 path.LineTo(4, -6);
                 path.Close();
-                //canvas.StrokeColor = Colors.Green;
-                //canvas.StrokeSize = 6;
                 canvas.DrawPath(path);
                 canvas.RestoreState();
             }
@@ -180,36 +179,14 @@ public class ParallelNode : ProcessNode
             path.LineTo(-4, -6);
             path.LineTo(4, -6);
             path.Close();
-            //canvas.StrokeColor = Colors.Green;
-            //canvas.StrokeSize = 6;
             canvas.DrawPath(path);
-            //canvas.DrawPath(new PathF()
-            //    .MoveTo(0, 0)
-            //    .LineTo(-4, -6)
-            //    .LineTo(4, -6)
-            //    .Close());
+
             canvas.RestoreState();
 
             // Flèche de la fin de la branche jusqu’au bas du conteneur
             float branchBottomX = b.Bounds.Center.X;
             float branchBottomY = b.Bounds.Bottom;
             canvas.DrawLine(branchBottomX, branchBottomY, branchBottomX, bottomY);
-            canvas.SaveState();
-            canvas.Translate(branchBottomX, bottomY);
-            PathF path2 = new PathF();
-            //path2.MoveTo(0, 0);
-            //path2.LineTo(-4, 6);
-            //path2.LineTo(4, 6);
-            //path2.Close();
-            ////canvas.StrokeColor = Colors.Green;
-            ////canvas.StrokeSize = 6;
-            //canvas.DrawPath(path2);
-            //canvas.DrawPath(new PathF()
-            //    .MoveTo(0, 0)
-            //    .LineTo(-4, 6)
-            //    .LineTo(4, 6)
-            //    .Close());
-            canvas.RestoreState();
 
             x += size.Width + Spacing;
         }
