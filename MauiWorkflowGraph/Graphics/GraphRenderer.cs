@@ -10,7 +10,7 @@ namespace MauiWorkflowGraph.Graphics;
 [ObservableObject]
 public partial class GraphRenderer : IDrawable
 {
-    private ProcessNode _root;
+    public ProcessNode Root { get; private set; }
     private string _input;
    
     public GraphRenderer()
@@ -20,13 +20,13 @@ public partial class GraphRenderer : IDrawable
     public ProcessNode UpdateGraph(string newInput)
     {
         _input = newInput;
-        _root = ProcessParser.Parse(_input);
-        return _root;
+        Root = ProcessParser.Parse(_input);
+        return Root;
     }
 
     // Méthode publique pour le hit‑test
     public ProcessNode HitTest(PointF point)
-        => _root?.HitTest(point);
+        => Root?.HitTest(point);
 
     [ObservableProperty]
     public partial float ContentWidth  { get; set; } =1000;
@@ -37,16 +37,43 @@ public partial class GraphRenderer : IDrawable
     public void Draw(ICanvas canvas, RectF dirtyRect)
     {
         // mesurer et centrer
-        var size = _root.Measure(canvas);
+        var size = Root.Measure(canvas);
         ContentWidth = size.Width;
         ContentHeight = size.Height;
-        _root.Bounds = new RectF(
+        Root.Bounds = new RectF(
             dirtyRect.Center.X - size.Width/2,
             dirtyRect.Center.Y - size.Height/2,
             size.Width, size.Height);
 
         // dessiner
-        _root.Draw(canvas);
+        Root.Draw(canvas);
+    }
+        /// <summary>
+    /// Remet l'état de tous les nœuds (feuilles et conteneurs) à Idle.
+    /// </summary>
+    public void ResetStates()
+    {
+        if (Root != null)
+            ResetStateRecursive(Root);
+    }
+
+    private void ResetStateRecursive(ProcessNode node)
+    {
+        // 1) réinitialise le nœud courant
+        node.State = NodeState.Idle;
+
+        // 2) si c'est un conteneur, descends dans ses enfants
+        if (node is SequenceNode seq)
+        {
+            foreach (var child in seq.Children)
+                ResetStateRecursive(child);
+        }
+        else if (node is ParallelNode par)
+        {
+            foreach (var branch in par.Branches)
+                ResetStateRecursive(branch);
+        }
+        // LeafNode n'a pas d'enfants, donc on arrête là
     }
 }
 

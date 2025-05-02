@@ -1,29 +1,50 @@
-﻿using Microsoft.Maui.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using MauiWorkflowGraph.Models;
 
 namespace MauiWorkflowGraph.Graphics;
+public enum NodeState
+{
+    Idle,
+    Executing,
+    Completed,
+    Error,
+}
 
 public abstract class ProcessNode
 {
     public RectF Bounds;        // Position et taille calculées
     public abstract SizeF Measure(ICanvas canvas);
     public abstract void Draw(ICanvas canvas);
-    protected float FontSize = 10;
+    protected float FontSize = 14;
     protected IFont Font = new Microsoft.Maui.Graphics.Font("OpenSans-Semibold");
     protected float Density = (float)DeviceDisplay.Current.MainDisplayInfo.Density;
     public abstract ProcessNode HitTest(PointF point);
+    public NodeState State { get; set; } = NodeState.Idle;
 }
 
 public class LeafNode : ProcessNode
 {
-    public string Name;
-    public LeafNode(string name) => Name = name;
-    
+    private Rule _rule;
+    public string Name { get { return _rule.Name; } }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void SelectDeselect()
+    {
+        if (RulesManager.Instance.SelectedRule == _rule)
+        {
+            RulesManager.Instance.SelectedRule = null;
+        }
+        else
+        {
+            RulesManager.Instance.SelectedRule = _rule;
+        }
+    }
+    public LeafNode(string id)
+    {
+        _rule = RulesManager.Instance.Rules[id];
+    }
+
     public override SizeF Measure(ICanvas canvas)
     {
         //canvas.DisplayScale = Density;
@@ -32,22 +53,58 @@ public class LeafNode : ProcessNode
         canvas.FontColor = Colors.Black;
 
         var textSize = canvas.GetStringSize(Name, Font, FontSize);
-
-        return new SizeF(textSize.Width + 16 , textSize.Height + 12 );
+#if WINDOWS
+        return new SizeF(textSize.Width *Density + 16 , textSize.Height*Density + 24 );     
+#else        
+        return new SizeF(textSize.Width + 16, textSize.Height + 16);
+#endif
     }
+
     public override void Draw(ICanvas canvas)
     {
-        canvas.FillColor = Colors.White;
+
+
         canvas.StrokeColor = Colors.LightGray;
         canvas.StrokeSize = 2;
+        if (RulesManager.Instance.SelectedRule == _rule)
+        {
+
+            canvas.StrokeDashPattern = new float[] { 4, 2 };
+            canvas.StrokeDashOffset = 0;
+            canvas.FillColor = Colors.LightBlue;
+        }
+        else
+        {
+            // draw no dash lines
+            canvas.StrokeDashPattern = null;
+            switch (State)
+            {
+                case NodeState.Executing:
+                    canvas.FillColor = Colors.Yellow;
+                    break;
+                case NodeState.Completed:
+                    canvas.FillColor = Colors.LightGreen;
+                    break;
+                default:
+                    canvas.FillColor = Colors.White;
+                    break;
+            }
+        }
         canvas.FillRoundedRectangle(Bounds, 4);
         canvas.DrawRoundedRectangle(Bounds, 4);
+        canvas.StrokeDashPattern = null;
+
         // texte centré
         var textSize = canvas.GetStringSize(Name, Font, FontSize);
         float x = Bounds.X + (Bounds.Width - textSize.Width) / 2;
         float y = Bounds.Y + (Bounds.Height - textSize.Height) / 2;
+#if WINDOWS
+        canvas.DrawString(Name, x, y-4, textSize.Width * Density, textSize.Height * Density + 8  , HorizontalAlignment.Left, VerticalAlignment.Top);
+#else        
         canvas.DrawString(Name, x, y, textSize.Width * Density, textSize.Height * Density, HorizontalAlignment.Left, VerticalAlignment.Top);
+#endif
     }
+
     public override ProcessNode HitTest(PointF point)
     {
         return Bounds.Contains(point) ? this : null;
@@ -149,6 +206,7 @@ public class ParallelNode : ProcessNode
 
     public override void Draw(ICanvas canvas)
     {
+
         // Boîte : tracer seulement top et bottom
         canvas.StrokeColor = Colors.LightGray;
         canvas.StrokeSize = 4;
