@@ -1,8 +1,8 @@
 # Process Flow Demonstration
 This repository contains a simple demonstration of a process flow using C# and .net MAUI. The code is designed to be easy to understand and modify a process flow that contain linear and parallel flows, making it suitable for educational purposes or as a starting point for more complex projects.
 
-<img src="RunningOnIos.png" alt="Home" width="30%"/> 
-<img src="RunningWindows.png" alt="Home" width="60%"/> 
+<img src="RunningOnIos.png" alt="Home" width="28%"/> <img src="RunningAndroid.png" alt="Home" width="30%"/> 
+<img src="RunningWindows.png" alt="Home" width="65%"/> 
 
 
 ## Features
