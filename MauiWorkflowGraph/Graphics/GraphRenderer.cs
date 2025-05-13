@@ -12,6 +12,9 @@ public partial class GraphRenderer : IDrawable
 {
     public ProcessNode Root { get; private set; }
     private string _input;
+
+    public float   Scale  { get; set; } = 1f;
+    public PointF  Offset { get; set; } = new PointF(0,0);
    
     public GraphRenderer()
     {
@@ -24,22 +27,37 @@ public partial class GraphRenderer : IDrawable
         return Root;
     }
 
-    // Méthode publique pour le hit‑test
-    public ProcessNode HitTest(PointF point)
-        => Root?.HitTest(point);
+    /// <summary>
+    /// Retourne le ProcessNode sous le point tapé, en tenant compte du scale et de l’offset.
+    /// </summary>
+    public ProcessNode HitTest(PointF viewPoint)
+    {
+        if (Root == null)
+            return null;
 
-    [ObservableProperty]
-    public partial float ContentWidth  { get; set; } =1000;
-    [ObservableProperty]
-    public partial float ContentHeight { get; set; }=1000;
+        // 1. On passe du point en coordonnées de la vue
+        //    aux coordonnées logiques avant zoom & pan
+        float logicalX = (viewPoint.X - Offset.X) / Scale;
+        float logicalY = (viewPoint.Y - Offset.Y) / Scale;
+        var logicalPoint = new PointF(logicalX, logicalY);
+
+        // 2. On appelle le hit-test classique
+        return Root.HitTest(logicalPoint);
+    }
 
 
     public void Draw(ICanvas canvas, RectF dirtyRect)
     {
+        if (Root == null)
+            return;
+        canvas.SaveState();
+        // applique zoom et translation
+        canvas.Translate(Offset.X, Offset.Y);
+        canvas.Scale(Scale, Scale);
+
         // mesurer et centrer
         var size = Root.Measure(canvas);
-        ContentWidth = size.Width;
-        ContentHeight = size.Height;
+
         Root.Bounds = new RectF(
             dirtyRect.Center.X - size.Width/2,
             dirtyRect.Center.Y - size.Height/2,
@@ -47,6 +65,8 @@ public partial class GraphRenderer : IDrawable
 
         // dessiner
         Root.Draw(canvas);
+
+        canvas.RestoreState();
     }
         /// <summary>
     /// Remet l'état de tous les nœuds (feuilles et conteneurs) à Idle.
