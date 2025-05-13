@@ -23,7 +23,7 @@ public abstract class ProcessNode
 
 public class LeafNode : ProcessNode
 {
-    private Rule _rule;
+    private FlowProcess _rule;
     public string Name { get { return _rule.Name; } }
 
     /// <summary>
@@ -31,18 +31,18 @@ public class LeafNode : ProcessNode
     /// </summary>
     public void SelectDeselect()
     {
-        if (RulesManager.Instance.SelectedRule == _rule)
+        if (FlowProcessManager.Instance.SelectedProcess == _rule)
         {
-            RulesManager.Instance.SelectedRule = null;
+            FlowProcessManager.Instance.SelectedProcess = null;
         }
         else
         {
-            RulesManager.Instance.SelectedRule = _rule;
+            FlowProcessManager.Instance.SelectedProcess = _rule;
         }
     }
     public LeafNode(string id)
     {
-        _rule = RulesManager.Instance.Rules[id];
+        _rule = FlowProcessManager.Instance.FlowProcesses[id];
     }
 
     public override SizeF Measure(ICanvas canvas)
@@ -66,7 +66,7 @@ public class LeafNode : ProcessNode
 
         canvas.StrokeColor = Colors.LightGray;
         canvas.StrokeSize = 2;
-        if (RulesManager.Instance.SelectedRule == _rule)
+        if (FlowProcessManager.Instance.SelectedProcess == _rule)
         {
 
             canvas.StrokeDashPattern = new float[] { 4, 2 };
@@ -80,10 +80,10 @@ public class LeafNode : ProcessNode
             switch (State)
             {
                 case NodeState.Executing:
-                    canvas.FillColor = Colors.Yellow;
+                    canvas.FillColor = Colors.Orange;
                     break;
                 case NodeState.Completed:
-                    canvas.FillColor = Colors.LightGreen;
+                    canvas.FillColor = Colors.Green;
                     break;
                 default:
                     canvas.FillColor = Colors.White;

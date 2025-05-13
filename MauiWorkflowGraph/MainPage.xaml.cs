@@ -11,8 +11,9 @@ public partial class MainPage : ContentPage
     public MainPage()
     {
         InitializeComponent();
-        // Exemple d’entrée
-        //string input = "[Adonis,(Arold,Bernard),Brigitte,Charles,([Denis,Chris],[Claude,(Colby,[Amanda,Dillan])],[Brad,Dick,Angel]),Dorothy]";
+       
+        // Between square bracket are sequential processes (rules), between parenthesis are parallel ones
+        // The name is the dictionary index found in FlowProcessManager.cs
         string input = "[Rule1,(Rule2,Rule3),Rule4,Rule5,([Rule6,Rule7],[Rule8,(Rule9,[Rule10,Rule11])],[Rule12,Rule13,Rule14]),Rule15]";
         _renderer = new GraphRenderer();
         _renderer.UpdateGraph(input);
@@ -21,11 +22,7 @@ public partial class MainPage : ContentPage
         BindingContext = _renderer;
     }
 
-    protected override void OnAppearing()
-    {
-        base.OnAppearing();
 
-    }
 
     private void myGraphicsView_StartInteraction(object sender, TouchEventArgs e)
     {
@@ -44,6 +41,9 @@ public partial class MainPage : ContentPage
         }
     }
 
+    /// <summary>
+    /// Start the simulation when the button is clicked.
+    /// </summary>
     async void OnStartSimulationClicked(object sender, EventArgs e)
     {
         btnStart.IsEnabled = false;
@@ -55,7 +55,12 @@ public partial class MainPage : ContentPage
     }
 
     Random _random = new Random();
-    // Simulation récursive
+
+    /// <summary>
+    /// Simulate node execution.
+    /// </summary>
+    /// <param name="node"></param>
+    /// <returns></returns>
     async Task SimulateNode(ProcessNode node)
     {
         switch (node)
@@ -63,7 +68,7 @@ public partial class MainPage : ContentPage
             case LeafNode leaf:
                 leaf.State = NodeState.Executing;
                 myGraphicsView.Invalidate();
-                await Task.Delay(_random.Next(600,2000));
+                await Task.Delay(_random.Next(600,2000)); // wait for 0.6 to 2 seconds
                 leaf.State = NodeState.Completed;
                 myGraphicsView.Invalidate();
                 break;

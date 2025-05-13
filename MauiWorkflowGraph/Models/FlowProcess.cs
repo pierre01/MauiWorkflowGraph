@@ -6,19 +6,28 @@ using System.Threading.Tasks;
 
 namespace MauiWorkflowGraph.Models;
 
-public class Rule
+/// <summary>
+/// 
+/// </summary>
+public class FlowProcess
 {
-    public string Id { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
     public string Expression { get; set; }
     public string Result { get; set; }
-    public Rule(string id, string name, string description, string expression, string result)
+    public FlowProcess(string name, string description, string expression, string result)
     {
-        Id = id;
         Name = name;
         Description = description;
         Expression = expression;
         Result = result;
+    }
+
+    public virtual bool Execute()
+    {
+        // Simulate some processing
+        Console.WriteLine($"Executing {Name} with expression: {Expression}");
+        // Here you would add the actual logic to execute the process
+        return true; // Return true if successful, false otherwise
     }
 }
