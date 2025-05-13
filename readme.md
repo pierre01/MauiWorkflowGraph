@@ -1,6 +1,9 @@
 # Process Flow Demonstration
 This repository contains a simple demonstration of a process flow using C# and .net MAUI. The code is designed to be easy to understand and modify a process flow that contain linear and parallel flows, making it suitable for educational purposes or as a starting point for more complex projects.
 
+The application woks on all platforms and allows selection, panning, zooming of the graph.
+As well as a simulated execution.
+
 <img src="RunningOnIos.png" alt="Home" width="28%"/> <img src="RunningAndroid.png" alt="Home" width="30%"/> 
 <img src="RunningWindows.png" alt="Home" width="65%"/> 
 
@@ -42,7 +45,7 @@ myGraphicsView.Drawable = _renderer;
 - The input string is a nested structure that represents the execution order of the rules.
   - "[...]" inside brackets are sequences execured sequencially. 
   - "(...)" inside parenthesis are sequences executed in parallel.
-  - Each rule is represented by its dictionary ID (e.g., "Rule1", "Rule2", etc.).
+  - Each rule is represented by its dictionary index (e.g., "Rule1", "Rule2", etc.).
 ****"[Rule1,(Rule2,Rule3),Rule4]"**** means that **Rule1** is executed first, followed by **Rule2** and **Rule3** in parallel, and then **Rule4**.
 <img src="smallstring.png" alt="Home" width="50%"/> 
 
