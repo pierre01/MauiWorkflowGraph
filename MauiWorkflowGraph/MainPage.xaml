@@ -1,15 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage x:Class="MauiWorkflowGraph.MainPage" xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:gr="clr-namespace:MauiWorkflowGraph.Graphics" x:DataType="gr:GraphRenderer">
-
-	<ScrollView HorizontalScrollBarVisibility="Always" Orientation="Both" VerticalScrollBarVisibility="Always">
-		<Grid>
-			<Button x:Name="btnStart" Margin="16" Clicked="OnStartSimulationClicked"
-			        HorizontalOptions="End" Text="Run..." VerticalOptions="Start" />
-			<GraphicsView x:Name="myGraphicsView"
-			              HeightRequest="{Binding ContentHeight}"
-			              HorizontalOptions="Fill" StartInteraction="myGraphicsView_StartInteraction" VerticalOptions="Fill"
-			              WidthRequest="{Binding ContentWidth}" />
-		</Grid>
-	</ScrollView>
+	<Grid>
+		<GraphicsView x:Name="myGraphicsView" HorizontalOptions="Fill" VerticalOptions="Fill" />
+		<Button x:Name="btnStart" Margin="16" Clicked="OnStartSimulationClicked"
+		        HorizontalOptions="Start" Text="Run..." VerticalOptions="Start" />
+	</Grid>
 </ContentPage>
