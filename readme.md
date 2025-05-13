@@ -1,5 +1,5 @@
 # Process Flow Demonstration
-This repository contains a simple demonstration of a process flow using C# and .net MAUI. The code is designed to be easy to understand and modify, making it suitable for educational purposes or as a starting point for more complex projects.
+This repository contains a simple demonstration of a process flow using C# and .net MAUI. The code is designed to be easy to understand and modify a process flow that contain linear and parallel flows, making it suitable for educational purposes or as a starting point for more complex projects.
 
 <img src="RunningOnIos.png" alt="Home" width="30%"/> 
 <img src="RunningWindows.png" alt="Home" width="60%"/> 
@@ -7,10 +7,10 @@ This repository contains a simple demonstration of a process flow using C# and .
 
 ## Features
   - 2 things are required to run the code:
-    - A Dictionary<string, Rule> that contains the rules (found in RulesManage.cs)
-    - A string that contains the structure of execution of the rules
+    - A Dictionary<string, FlowProces> that contains the processes to run (found in **FlowProcessManager.cs**)
+    - A string that contains the structure of execution of the rules/ Processes (found in **MainPage.xaml.cs**)
 
-### Rule dictionary (RulesManager.cs)
+### Rule dictionary (FlowProcessManager.cs)
 ```csharp 
 _flowProcesses = new Dictionary<string, FlowProcess>
 {
