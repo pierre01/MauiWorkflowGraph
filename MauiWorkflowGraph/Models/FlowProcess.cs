@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace MauiWorkflowGraph.Models;
 
 /// <summary>
+/// This is the process to be executed... Can be a Rule, a function, etc.
 /// 
 /// </summary>
 public class FlowProcess
@@ -22,9 +23,14 @@ public class FlowProcess
         Expression = expression;
         Result = result;
     }
-
-    public virtual bool Execute()
+    private Random _random = new Random();
+    /// <summary>
+    /// Execute process or rule.
+    /// </summary>
+    /// <returns> true if successful</returns>
+    public virtual async Task<bool> Execute()
     {
+        await Task.Delay(_random.Next(600, 2000)); // wait for 0.6 to 2 seconds
         // Simulate some processing
         Console.WriteLine($"Executing {Name} with expression: {Expression}");
         // Here you would add the actual logic to execute the process

@@ -10,6 +10,8 @@ public class LeafNode : ProcessNode
     private FlowProcess _processRule;
     public string Name { get { return _processRule.Name; } }
 
+    public FlowProcess ProcessRule { get => _processRule; }
+
     /// <summary>
     /// 
     /// </summary>

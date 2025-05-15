@@ -118,7 +118,11 @@ public partial class MainPage : ContentPage
         }
     }
 
-    // End of interaction 
+    /// <summary>
+    /// Handles the tap or click event on the graph.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>    
     void OnEndInteraction(object sender, TouchEventArgs e)
     {
         if (_isTap && e.Touches.Length == 1)
@@ -127,14 +131,23 @@ public partial class MainPage : ContentPage
             var tapped = _renderer.HitTest(new PointF(p.X, p.Y));
             if (tapped is LeafNode leaf)
             {
-                // Action personnalisée, p.ex. afficher une alerte
+                //Selects or deselects the node if tapped
                 leaf.SelectDeselect();
+                if (FlowProcessManager.Instance.SelectedProcess != null)
+                {
+                    // TODO: Expand the bottom sheet with the selected process details
+                } else
+                {
+                    // TODO: Collapse the bottom sheet if no process is selected
+                }
+
                 myGraphicsView.Invalidate();
             }
             // Deselect current if tapped outside
             if(tapped == null && FlowProcessManager.Instance.SelectedProcess !=null)
             {
                 FlowProcessManager.Instance.SelectedProcess = null;
+                // TODO: Collapse the bottom sheet
                 myGraphicsView.Invalidate();
             }
         }
@@ -165,7 +178,6 @@ public partial class MainPage : ContentPage
         myGraphicsView.Invalidate();
     }
 
-    Random _random = new Random();
 
     /// <summary>
     /// Simulate node execution.
@@ -179,7 +191,13 @@ public partial class MainPage : ContentPage
             case LeafNode leaf:
                 leaf.State = NodeState.Executing;
                 myGraphicsView.Invalidate();
-                await Task.Delay(_random.Next(600, 2000)); // wait for 0.6 to 2 seconds
+                var success  = await leaf.ProcessRule.Execute();
+                if (!success)
+                {
+                    leaf.State = NodeState.Error;
+                    myGraphicsView.Invalidate();
+                    return;
+                }
                 leaf.State = NodeState.Completed;
                 myGraphicsView.Invalidate();
                 break;
