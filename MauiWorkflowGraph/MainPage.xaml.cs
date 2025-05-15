@@ -1,4 +1,5 @@
 ﻿using MauiWorkflowGraph.Graphics;
+using MauiWorkflowGraph.Models;
 // PointerRoutedEventArgs
 #if WINDOWS
 using Microsoft.UI.Xaml; // Correct namespace for UIElement in WinUI
@@ -128,6 +129,12 @@ public partial class MainPage : ContentPage
             {
                 // Action personnalisée, p.ex. afficher une alerte
                 leaf.SelectDeselect();
+                myGraphicsView.Invalidate();
+            }
+            // Deselect current if tapped outside
+            if(tapped == null && FlowProcessManager.Instance.SelectedProcess !=null)
+            {
+                FlowProcessManager.Instance.SelectedProcess = null;
                 myGraphicsView.Invalidate();
             }
         }

@@ -37,6 +37,7 @@ namespace MauiWorkflowGraph.Models
 
         // Method to get the dictionary of rules
         public Dictionary<string, FlowProcess> FlowProcesses => _flowProcesses;
+
         public FlowProcess SelectedProcess
         {
             get

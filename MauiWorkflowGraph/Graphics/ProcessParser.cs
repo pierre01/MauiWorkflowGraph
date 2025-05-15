@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace MauiWorkflowGraph.Graphics;
 
+/// <summary>
+/// ProcessParser class is responsible for parsing a string representation of a process graph.
+/// </summary>
 public static class ProcessParser
 {
     public static ProcessNode Parse(string input)
