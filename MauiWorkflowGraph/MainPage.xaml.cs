@@ -1,5 +1,6 @@
 ﻿using MauiWorkflowGraph.Graphics;
 using MauiWorkflowGraph.Models;
+using MauiWorkflowGraph.ViewModels;
 // PointerRoutedEventArgs
 #if WINDOWS
 using Microsoft.UI.Xaml; // Correct namespace for UIElement in WinUI
@@ -54,8 +55,8 @@ public partial class MainPage : ContentPage
         myGraphicsView.EndInteraction += OnEndInteraction;
     }
 
-    // Allow zooming with the mouse (ctrl + Wheel)
 #if WINDOWS
+    // Allow zooming with the mouse (ctrl + Wheel)
     private void OnPointerWheelChanged(object sender, PointerRoutedEventArgs e)
     {
         // récupère le PointerPoint relatif au CanvasControl
@@ -136,9 +137,13 @@ public partial class MainPage : ContentPage
                 if (FlowProcessManager.Instance.SelectedProcess != null)
                 {
                     // TODO: Expand the bottom sheet with the selected process details
+                    bottomView.BindingContext = new ProcessBottomViewModel( FlowProcessManager.Instance.SelectedProcess);
+                    bottomView.TranslateTo(0, -300, 600, Easing.CubicOut);
                 } else
                 {
                     // TODO: Collapse the bottom sheet if no process is selected
+                    bottomView.TranslateTo(0, 0, 800, Easing.CubicIn);
+                    bottomView.BindingContext = null;
                 }
 
                 myGraphicsView.Invalidate();
@@ -148,6 +153,8 @@ public partial class MainPage : ContentPage
             {
                 FlowProcessManager.Instance.SelectedProcess = null;
                 // TODO: Collapse the bottom sheet
+                bottomView.TranslateTo(0, 0, 800, Easing.CubicIn);
+                bottomView.BindingContext = null;
                 myGraphicsView.Invalidate();
             }
         }

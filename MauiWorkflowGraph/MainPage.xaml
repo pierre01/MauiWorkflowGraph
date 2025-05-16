@@ -1,9 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage x:Class="MauiWorkflowGraph.MainPage" xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:gr="clr-namespace:MauiWorkflowGraph.Graphics" x:DataType="gr:GraphRenderer">
+<ContentPage x:Class="MauiWorkflowGraph.MainPage" xmlns="http://schemas.microsoft.com/dotnet/2021/maui" 
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MauiWorkflowGraph.ViewModels"
+             xmlns:views="clr-namespace:MauiWorkflowGraph.Views"
+			  x:DataType="vm:ProcessBottomViewModel"
+			 >
 	<Grid>
 		<GraphicsView x:Name="myGraphicsView" HorizontalOptions="Fill" VerticalOptions="Fill" />
 		<Button x:Name="btnStart" Margin="16" Clicked="OnStartSimulationClicked"
 		        HorizontalOptions="Start" Text="Run..." VerticalOptions="Start" />
+		<views:ProcessBottomView x:Name="bottomView" HorizontalOptions="Fill" VerticalOptions="End" Margin="0,0,0,-300" />
 	</Grid>
 </ContentPage>
