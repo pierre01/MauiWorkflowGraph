@@ -18,7 +18,7 @@ public abstract class ProcessNode
     public abstract SizeF Measure(ICanvas canvas);
     public abstract void Draw(ICanvas canvas);
     protected float FontSize = 14;
-    protected IFont Font = new Microsoft.Maui.Graphics.Font("OpenSans-Semibold");
+    protected IFont Font = new Microsoft.Maui.Graphics.Font("OpenSans-SemiBold");
     protected float Density = (float)DeviceDisplay.Current.MainDisplayInfo.Density;
     public abstract ProcessNode HitTest(PointF point);
     public NodeState State { get; set; } = NodeState.Idle;

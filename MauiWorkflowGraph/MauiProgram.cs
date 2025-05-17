@@ -17,7 +17,7 @@ namespace MauiWorkflowGraph
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                    fonts.AddFont("OpenSans-SemiBold.ttf", "OpenSansSemiBold");
                 });
 
 #if DEBUG

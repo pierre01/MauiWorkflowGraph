@@ -1,37 +1,24 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView x:Class="MauiWorkflowGraph.Views.ProcessBottomView" xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit" xmlns:vm="clr-namespace:MauiWorkflowGraph.ViewModels" x:DataType="vm:ProcessBottomViewModel">
-	<ContentView.Resources>
-		<Style x:Key="InvalidEntryStyle" TargetType="Entry">
-			<Setter Property="TextColor" Value="Red" />
-			<Setter Property="BackgroundColor" Value="LightPink" />
-		</Style>
-		<Style x:Key="ValidEntryStyle" TargetType="Entry">
-			<Setter Property="TextColor" Value="Green" />
-		</Style>
-	</ContentView.Resources>
-	<VerticalStackLayout Background="#D95C5B5B" HeightRequest="300">
-		<Label HorizontalOptions="Start" Text="Name" VerticalOptions="Start" />
-		<Entry x:Name="NameEntry" IsEnabled="{Binding IsEditable}" Text="{Binding Name, Mode=TwoWay}">
-			<Entry.Behaviors>
-				<toolkit:TextValidationBehavior Flags="ValidateOnValueChanged"
-				                                InvalidStyle="{StaticResource InvalidEntryStyle}"
-				                                MaximumLength="10" MinimumLength="1"
-				                                ValidStyle="{StaticResource ValidEntryStyle}" />
-			</Entry.Behaviors>
-		</Entry>
-		<Label HorizontalOptions="Start" Text="Description" VerticalOptions="Start" Margin="0,8" />
-		<Entry x:Name="DescriptionEntry" IsEnabled="{Binding IsEditable}" Text="{Binding Description, Mode=TwoWay}">
-			<Entry.Behaviors>
-				<toolkit:TextValidationBehavior Flags="ValidateOnValueChanged"
-				                                InvalidStyle="{StaticResource InvalidEntryStyle}"
-				                                MaximumLength="10" MinimumLength="1"
-				                                ValidStyle="{StaticResource ValidEntryStyle}" />
-			</Entry.Behaviors>
-		</Entry>
 
-		<Label HorizontalOptions="Start" Text="Expression" VerticalOptions="Center" Margin="0,8" />
-		<Entry x:Name="ExpressionEntry" IsEnabled="{Binding IsEditable}" Text="{Binding Description, Mode=TwoWay}"/>
-		<Button Text="Save" Command="{Binding SaveCommand}" IsEnabled="{Binding IsEditable}"/>
-	</VerticalStackLayout>
+	<Grid Background="{AppThemeBinding Light=#F2FFFFFF, Dark=#F2242424}" HeightRequest="300" IsClippedToBounds="True">
+		<VerticalStackLayout Margin="8" >
+			
+			<Label Margin="2,2,0,2" HorizontalOptions="Start" Text="Name" VerticalOptions="Start" />
+			<Entry x:Name="NameEntry" IsEnabled="{Binding IsEditable}" Text="{Binding Name, Mode=TwoWay}"/>
+
+			<Label Margin="2,16,0,2" HorizontalOptions="Start" Text="Description" VerticalOptions="Start" />
+			<Entry x:Name="DescriptionEntry" IsEnabled="{Binding IsEditable}" Text="{Binding Description, Mode=TwoWay}" />
+
+			<Label Margin="2,16,0,2" HorizontalOptions="Start" Text="Expression" VerticalOptions="Center" />
+			<Entry x:Name="ExpressionEntry" IsEnabled="{Binding IsEditable}" Text="{Binding Description, Mode=TwoWay}" />
+			
+			<Button Margin="0,16"
+			        Command="{Binding SaveCommand}"
+			        HorizontalOptions="End"
+			        IsEnabled="{Binding IsEditable}"
+			        Text="Save" />
+		</VerticalStackLayout>
+	</Grid>
 </ContentView>
