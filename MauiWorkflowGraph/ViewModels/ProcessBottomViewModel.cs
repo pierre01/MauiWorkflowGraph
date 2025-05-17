@@ -24,6 +24,8 @@ public partial class ProcessBottomViewModel : ObservableValidator
         Name = processRule.Name;
         Description = processRule.Description;
         Expression = processRule.Expression;
+        Result = processRule.Result;
+        IsEditable = true;
     }
 
     [ObservableProperty]
@@ -40,6 +42,12 @@ public partial class ProcessBottomViewModel : ObservableValidator
     [MaxLength(250)]
     [CustomValidation(typeof(ProcessBottomViewModel), nameof(ValidateExpression))]
     public partial string Expression { get; set; } 
+    
+    [ObservableProperty]
+    public partial string Result { get; set; } 
+    
+    [ObservableProperty]
+    public partial bool IsEditable { get; set; } 
 
     public static ValidationResult ValidateExpression(string expression, ValidationContext context)
     {
