@@ -138,12 +138,13 @@ public partial class MainPage : ContentPage
                 {
                     // TODO: Expand the bottom sheet with the selected process details
                     bottomView.BindingContext = new ProcessBottomViewModel( FlowProcessManager.Instance.SelectedProcess);
-                    bottomView.TranslateTo(0, -300, 500, Easing.CubicOut);
+                    bottomView.TranslateTo(0,332 , 500, Easing.CubicOut);
                 } else
                 {
                     // TODO: Collapse the bottom sheet if no process is selected
                     await bottomView.TranslateTo(0, 0, 400, Easing.CubicIn);
                     bottomView.BindingContext = null;
+                    bottomView.HideSoftKeyboard();
                 }
 
                 myGraphicsView.Invalidate();
@@ -155,6 +156,7 @@ public partial class MainPage : ContentPage
                 // TODO: Collapse the bottom sheet
                 await bottomView.TranslateTo(0, 0, 400, Easing.CubicIn);
                 bottomView.BindingContext = null;
+                bottomView.HideSoftKeyboard();
                 myGraphicsView.Invalidate();
             }
         }

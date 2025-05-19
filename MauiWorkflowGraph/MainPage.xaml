@@ -9,6 +9,6 @@
 		<GraphicsView x:Name="myGraphicsView" HorizontalOptions="Fill" VerticalOptions="Fill" />
 		<Button x:Name="btnStart" Margin="16" Clicked="OnStartSimulationClicked"
 		        HorizontalOptions="Start" Text="Run..." VerticalOptions="Start" />
-		<views:ProcessBottomView x:Name="bottomView" HorizontalOptions="Fill" VerticalOptions="End" Margin="0,0,0,-300" />
+		<views:ProcessBottomView x:Name="bottomView" HorizontalOptions="Fill" VerticalOptions="Start" Margin="0,-332,0,0" />
 	</Grid>
 </ContentPage>

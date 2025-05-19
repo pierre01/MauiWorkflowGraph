@@ -47,19 +47,22 @@ public partial class ProcessBottomViewModel : ObservableValidator
     public partial string Result { get; set; } 
     
     [ObservableProperty]
+    public partial string Errors { get; set; } 
+    
+    [ObservableProperty]
     public partial bool IsEditable { get; set; } 
 
     public static ValidationResult ValidateExpression(string expression, ValidationContext context)
     {
         ProcessBottomViewModel instance = (ProcessBottomViewModel)context.ObjectInstance;
-        bool isValid = true; //instance.service.Validate(expression);
+        bool isValid = false; //instance.service.Validate(expression);
 
         if (isValid)
         {
             return ValidationResult.Success;
         }
 
-        return new("The expression was not validated by the fancy service");
+        return new("The expression is not valid");
     }
 
     [RelayCommand]
@@ -69,6 +72,9 @@ public partial class ProcessBottomViewModel : ObservableValidator
         ValidateAllProperties();
         if (HasErrors)
         {
+            //string.Join(" ", GetErrors(nameof(Name)).Select(e => e.ErrorMessage));
+            Errors = string.Join(Environment.NewLine, GetErrors().Select(e => e.ErrorMessage));
+
             return;
         }
     }

@@ -2,24 +2,28 @@
 <ContentView x:Class="MauiWorkflowGraph.Views.ProcessBottomView" xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit" xmlns:vm="clr-namespace:MauiWorkflowGraph.ViewModels" x:DataType="vm:ProcessBottomViewModel">
 
-	<Grid Background="{AppThemeBinding Light=#F2FFFFFF, Dark=#F2242424}" HeightRequest="300" IsClippedToBounds="True">
+	<Grid Background="{AppThemeBinding Light=#F2FFFFFF, Dark=#F2242424}" HeightRequest="332" IsClippedToBounds="True">
 		<VerticalStackLayout Margin="8" >
 			
-			<Label Margin="2,2,0,2" HorizontalOptions="Start" Text="Name" VerticalOptions="Start" />
+
+			<Label Margin="2,2,0,2" HorizontalOptions="Start" Text="Name" FontSize="Small" VerticalOptions="Start" />
 			<Entry x:Name="NameEntry" IsEnabled="{Binding IsEditable}" Text="{Binding Name, Mode=TwoWay}"/>
 
-			<Label Margin="2,16,0,2" HorizontalOptions="Start" Text="Description" VerticalOptions="Start" />
+			<Label Margin="2,16,0,2" HorizontalOptions="Start" Text="Description"  FontSize="Small" VerticalOptions="Start" />
 			<Entry x:Name="DescriptionEntry" IsEnabled="{Binding IsEditable}" Text="{Binding Description, Mode=TwoWay}" />
 
-			<Label Margin="2,16,0,2" HorizontalOptions="Start" Text="Expression" VerticalOptions="Center" />
-			<Entry x:Name="ExpressionEntry" IsEnabled="{Binding IsEditable}" Text="{Binding Description, Mode=TwoWay}" />
+			<Label Margin="2,16,0,2" HorizontalOptions="Start" Text="Expression"  FontSize="Small" VerticalOptions="Center" />
+			<Entry x:Name="ExpressionEntry" IsEnabled="{Binding IsEditable}" Text="{Binding Expression, Mode=TwoWay}" />
 			
-			<Button Margin="0,16"
-			        Command="{Binding SaveCommand}"
-			        HorizontalOptions="End"
-			        IsEnabled="{Binding IsEditable}"
-			        Text="Save" />
+			<Grid HorizontalOptions="Fill" ColumnDefinitions="*,*">
+				<Label Margin="2,2,0,2" HorizontalOptions="Start" FontSize="Micro" TextColor="Red"  Text="{Binding Errors}" VerticalOptions="Start" />
+				<Button Margin="0,16" Grid.Column="1"
+						Command="{Binding SaveCommand}"
+						HorizontalOptions="End"
+						IsEnabled="{Binding IsEditable}"
+						Text="Save" />
+			</Grid>		
 		</VerticalStackLayout>
-		<Rectangle HeightRequest="1" HorizontalOptions="Fill" VerticalOptions="Start" Stroke="#867E7E"/>
+		<Rectangle HeightRequest="1" HorizontalOptions="Fill" VerticalOptions="End" Stroke="#867E7E"/>
 	</Grid>
 </ContentView>
