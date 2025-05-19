@@ -124,7 +124,7 @@ public partial class MainPage : ContentPage
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>    
-    void OnEndInteraction(object sender, TouchEventArgs e)
+    async void OnEndInteraction(object sender, TouchEventArgs e)
     {
         if (_isTap && e.Touches.Length == 1)
         {
@@ -142,7 +142,7 @@ public partial class MainPage : ContentPage
                 } else
                 {
                     // TODO: Collapse the bottom sheet if no process is selected
-                    bottomView.TranslateTo(0, 0, 400, Easing.CubicIn);
+                    await bottomView.TranslateTo(0, 0, 400, Easing.CubicIn);
                     bottomView.BindingContext = null;
                 }
 
@@ -153,7 +153,7 @@ public partial class MainPage : ContentPage
             {
                 FlowProcessManager.Instance.SelectedProcess = null;
                 // TODO: Collapse the bottom sheet
-                bottomView.TranslateTo(0, 0, 400, Easing.CubicIn);
+                await bottomView.TranslateTo(0, 0, 400, Easing.CubicIn);
                 bottomView.BindingContext = null;
                 myGraphicsView.Invalidate();
             }

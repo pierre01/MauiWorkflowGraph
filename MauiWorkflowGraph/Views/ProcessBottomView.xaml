@@ -20,5 +20,6 @@
 			        IsEnabled="{Binding IsEditable}"
 			        Text="Save" />
 		</VerticalStackLayout>
+		<Rectangle HeightRequest="1" HorizontalOptions="Fill" VerticalOptions="Start" Stroke="#867E7E"/>
 	</Grid>
 </ContentView>
