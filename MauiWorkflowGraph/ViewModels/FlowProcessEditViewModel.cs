@@ -32,15 +32,18 @@ public partial class FlowProcessEditViewModel : ObservableValidator
     [Required()]
     [MinLength(3,ErrorMessage ="Name must have a minimum of 3 Characters")]
     [MaxLength(100)]
+    [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
     public partial string Name { get; set; } 
 
     [ObservableProperty]
     [MaxLength(250)]
+    [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
     public partial string Description { get; set; }  
 
     [ObservableProperty]
     [MaxLength(250)]
     [CustomValidation(typeof(FlowProcessEditViewModel), nameof(ValidateExpression))]
+    [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
     public partial string Expression { get; set; } 
     
     [ObservableProperty]
@@ -50,8 +53,14 @@ public partial class FlowProcessEditViewModel : ObservableValidator
     public partial string Errors { get; set; } 
     
     [ObservableProperty]
-    public partial bool IsEditable { get; set; } 
+    public partial bool IsEditable { get; set; }
 
+    /// <summary>
+    /// Custom validation for the expression property.
+    /// </summary>
+    /// <param name="expression"></param>
+    /// <param name="context"></param>
+    /// <returns></returns>
     public static ValidationResult ValidateExpression(string expression, ValidationContext context)
     {
         FlowProcessEditViewModel instance = (FlowProcessEditViewModel)context.ObjectInstance;
@@ -65,24 +74,22 @@ public partial class FlowProcessEditViewModel : ObservableValidator
         return new("The expression is not valid");
     }
 
-    [RelayCommand]
+
+    [RelayCommand(CanExecute = nameof(HasChanged))]
     private async Task Save()
     {
         // Validate
         ValidateAllProperties();
         if (HasErrors)
         {
-            //string.Join(" ", GetErrors(nameof(Name)).Select(e => e.ErrorMessage));
             Errors = string.Join(Environment.NewLine, GetErrors().Select(e => e.ErrorMessage));
-
             return;
         }
+
         // Save the process
         _process.Name = Name;
         _process.Description = Description;
         _process.Expression = Expression;
-        _process.Result = Result;
-
     }
 
     /// <summary>
