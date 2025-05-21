@@ -38,7 +38,7 @@ public partial class MainPage : ContentPage
         _renderer = new GraphRenderer();
         _renderer.UpdateGraph(input);
         myGraphicsView.Drawable = _renderer;
-        EditProcessView.Closing += Closing; 
+        EditProcessView.Closing += Closing;
 
 #if WINDOWS
         myGraphicsView.HandlerChanged += (s, e) =>
@@ -50,8 +50,8 @@ public partial class MainPage : ContentPage
         };
 #endif
 
-            // Activate Touch events
-            myGraphicsView.StartInteraction += OnStartInteraction;
+        // Activate Touch events
+        myGraphicsView.StartInteraction += OnStartInteraction;
         myGraphicsView.DragInteraction += OnDragInteraction;
         myGraphicsView.EndInteraction += OnEndInteraction;
     }
@@ -59,11 +59,13 @@ public partial class MainPage : ContentPage
     private async void Closing(object? sender, EventArgs e)
     {
 
-                await EditProcessView.TranslateTo(0, 0, 400, Easing.CubicIn);
-                EditProcessView.BindingContext = null;
-                EditProcessView.HideSoftKeyboard();
+        FlowProcessManager.Instance.SelectedProcess = null;
+        myGraphicsView.Invalidate();
+        await EditProcessView.TranslateTo(0, 0, 400, Easing.CubicIn);
+        EditProcessView.BindingContext = null;
+        EditProcessView.HideSoftKeyboard();
 
-     }
+    }
 
 #if WINDOWS
     // Allow zooming with the mouse (ctrl + Wheel)
@@ -136,7 +138,7 @@ public partial class MainPage : ContentPage
     /// <param name="e"></param>    
     async void OnEndInteraction(object sender, TouchEventArgs e)
     {
-        
+
 #if WINDOWS
         var panelHeight = 410; 
 #else
@@ -153,23 +155,23 @@ public partial class MainPage : ContentPage
                 if (FlowProcessManager.Instance.SelectedProcess != null)
                 {
                     // TODO: Expand the bottom sheet with the selected process details
-                    EditProcessView.BindingContext = new FlowProcessEditViewModel( FlowProcessManager.Instance.SelectedProcess);
-                    await EditProcessView.TranslateTo(0,panelHeight , 500, Easing.CubicOut);
-                } else
+                    EditProcessView.BindingContext = new FlowProcessEditViewModel(FlowProcessManager.Instance.SelectedProcess);
+                    myGraphicsView.Invalidate();
+                    await EditProcessView.TranslateTo(0, panelHeight, 500, Easing.CubicOut);
+                }
+                else
                 {
                     // TODO: Collapse the bottom sheet if no process is selected
                     Closing(null, EventArgs.Empty);
                 }
 
-                myGraphicsView.Invalidate();
             }
             // Deselect current if tapped outside
-            if(tapped == null && FlowProcessManager.Instance.SelectedProcess !=null)
+            if (tapped == null && FlowProcessManager.Instance.SelectedProcess != null)
             {
-                FlowProcessManager.Instance.SelectedProcess = null;
+                
                 // TODO: Collapse the bottom sheet
                 Closing(null, EventArgs.Empty);
-                myGraphicsView.Invalidate();
             }
         }
         // reset des flags
@@ -212,7 +214,7 @@ public partial class MainPage : ContentPage
             case LeafNode leaf:
                 leaf.State = NodeState.Executing;
                 myGraphicsView.Invalidate();
-                var success  = await leaf.ProcessRule.Execute();
+                var success = await leaf.ProcessRule.Execute();
                 if (!success)
                 {
                     leaf.State = NodeState.Error;

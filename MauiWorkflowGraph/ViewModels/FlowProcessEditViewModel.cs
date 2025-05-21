@@ -30,7 +30,7 @@ public partial class FlowProcessEditViewModel : ObservableValidator
 
     [ObservableProperty]
     [Required()]
-    [MinLength(2)]
+    [MinLength(3,ErrorMessage ="Name must have a minimum of 3 Characters")]
     [MaxLength(100)]
     public partial string Name { get; set; } 
 
@@ -77,6 +77,12 @@ public partial class FlowProcessEditViewModel : ObservableValidator
 
             return;
         }
+        // Save the process
+        _process.Name = Name;
+        _process.Description = Description;
+        _process.Expression = Expression;
+        _process.Result = Result;
+
     }
 
     /// <summary>
