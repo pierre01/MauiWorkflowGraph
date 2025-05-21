@@ -137,14 +137,14 @@ public partial class MainPage : ContentPage
                 if (FlowProcessManager.Instance.SelectedProcess != null)
                 {
                     // TODO: Expand the bottom sheet with the selected process details
-                    bottomView.BindingContext = new ProcessBottomViewModel( FlowProcessManager.Instance.SelectedProcess);
-                    bottomView.TranslateTo(0,332 , 500, Easing.CubicOut);
+                    EditProcessView.BindingContext = new FlowProcessEditViewModel( FlowProcessManager.Instance.SelectedProcess);
+                    EditProcessView.TranslateTo(0,332 , 500, Easing.CubicOut);
                 } else
                 {
                     // TODO: Collapse the bottom sheet if no process is selected
-                    await bottomView.TranslateTo(0, 0, 400, Easing.CubicIn);
-                    bottomView.BindingContext = null;
-                    bottomView.HideSoftKeyboard();
+                    await EditProcessView.TranslateTo(0, 0, 400, Easing.CubicIn);
+                    EditProcessView.BindingContext = null;
+                    EditProcessView.HideSoftKeyboard();
                 }
 
                 myGraphicsView.Invalidate();
@@ -154,9 +154,9 @@ public partial class MainPage : ContentPage
             {
                 FlowProcessManager.Instance.SelectedProcess = null;
                 // TODO: Collapse the bottom sheet
-                await bottomView.TranslateTo(0, 0, 400, Easing.CubicIn);
-                bottomView.BindingContext = null;
-                bottomView.HideSoftKeyboard();
+                await EditProcessView.TranslateTo(0, 0, 400, Easing.CubicIn);
+                EditProcessView.BindingContext = null;
+                EditProcessView.HideSoftKeyboard();
                 myGraphicsView.Invalidate();
             }
         }

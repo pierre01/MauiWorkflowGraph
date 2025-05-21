@@ -76,13 +76,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Views\ProcessBottomView.xaml.cs">
-	    <DependentUpon>ProcessBottomView.xaml</DependentUpon>
+	  <Compile Update="Views\FlowProcessEditView.xaml.cs">
+	    <DependentUpon>FlowProcessEditView.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Views\ProcessBottomView.xaml">
+	  <MauiXaml Update="Views\FlowProcessEditView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

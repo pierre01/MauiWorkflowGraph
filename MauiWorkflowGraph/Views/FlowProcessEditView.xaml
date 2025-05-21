@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentView x:Class="MauiWorkflowGraph.Views.ProcessBottomView" xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit" xmlns:vm="clr-namespace:MauiWorkflowGraph.ViewModels" x:DataType="vm:ProcessBottomViewModel">
+<ContentView x:Class="MauiWorkflowGraph.Views.FlowProcessEditView" xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit" xmlns:vm="clr-namespace:MauiWorkflowGraph.ViewModels" x:DataType="vm:FlowProcessEditViewModel">
 
-	<Grid Background="{AppThemeBinding Light=#F2FFFFFF, Dark=#F2242424}" HeightRequest="332" IsClippedToBounds="True">
+	<Grid Background="{AppThemeBinding Light=#F2ededec, Dark=#F2242424}" HeightRequest="332" IsClippedToBounds="True">
 		<VerticalStackLayout Margin="8" >
 			
 

@@ -11,14 +11,14 @@ using System.Threading.Tasks;
 
 namespace MauiWorkflowGraph.ViewModels;
 
-public partial class ProcessBottomViewModel : ObservableValidator
+public partial class FlowProcessEditViewModel : ObservableValidator
 {
     private readonly FlowProcess _process;
 
     // create an event to notify when we are closing the view
     public event EventHandler Closing;
 
-    public ProcessBottomViewModel(FlowProcess processRule)
+    public FlowProcessEditViewModel(FlowProcess processRule)
     {
         _process = processRule;
         Name = processRule.Name;
@@ -40,7 +40,7 @@ public partial class ProcessBottomViewModel : ObservableValidator
 
     [ObservableProperty]
     [MaxLength(250)]
-    [CustomValidation(typeof(ProcessBottomViewModel), nameof(ValidateExpression))]
+    [CustomValidation(typeof(FlowProcessEditViewModel), nameof(ValidateExpression))]
     public partial string Expression { get; set; } 
     
     [ObservableProperty]
@@ -54,7 +54,7 @@ public partial class ProcessBottomViewModel : ObservableValidator
 
     public static ValidationResult ValidateExpression(string expression, ValidationContext context)
     {
-        ProcessBottomViewModel instance = (ProcessBottomViewModel)context.ObjectInstance;
+        FlowProcessEditViewModel instance = (FlowProcessEditViewModel)context.ObjectInstance;
         bool isValid = false; //instance.service.Validate(expression);
 
         if (isValid)

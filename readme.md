@@ -53,3 +53,6 @@ myGraphicsView.Drawable = _renderer;
 ****"[Rule1,(Rule2,Rule3),Rule4,Rule5,([Rule6,Rule7],[Rule8,(Rule9,[Rule10,Rule11])],[Rule12,Rule13,Rule14]),Rule15]"****.
 <img src="longstring.png" alt="Home" width="80%"/> 
 
+## New Features:
+- **Editing Panel:** (Added - 5/20/25) the editing panel allows you to edit the rules and the execution structure. The changes are reflected in the graph immediately. 
+- **Editing the rules:** you can edit the name, description, expression, and result of each rule. The changes are saved in the dictionary and reflected in the graph immediately.

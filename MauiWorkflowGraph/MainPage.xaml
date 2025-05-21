@@ -3,12 +3,12 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:MauiWorkflowGraph.ViewModels"
              xmlns:views="clr-namespace:MauiWorkflowGraph.Views"
-			  x:DataType="vm:ProcessBottomViewModel"
+			  x:DataType="vm:FlowProcessEditViewModel"
 			 >
 	<Grid>
 		<GraphicsView x:Name="myGraphicsView" HorizontalOptions="Fill" VerticalOptions="Fill" />
 		<Button x:Name="btnStart" Margin="16" Clicked="OnStartSimulationClicked"
 		        HorizontalOptions="Start" Text="Run..." VerticalOptions="Start" />
-		<views:ProcessBottomView x:Name="bottomView" HorizontalOptions="Fill" VerticalOptions="Start" Margin="0,-332,0,0" />
+		<views:FlowProcessEditView x:Name="EditProcessView" HorizontalOptions="Fill" VerticalOptions="Start" Margin="0,-332,0,0" />
 	</Grid>
 </ContentPage>
