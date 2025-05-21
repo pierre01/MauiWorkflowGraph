@@ -19,6 +19,7 @@
 				<Label Margin="2,2,0,2" HorizontalOptions="Start" FontSize="Micro" TextColor="Red"  Text="{Binding Errors}" VerticalOptions="Start" />
 				<Button Margin="0,16" Grid.Column="1"
 						Command="{Binding SaveCommand}"
+						Clicked="OnSavedClicked"
 						HorizontalOptions="End"
 						IsEnabled="{Binding IsEditable}"
 						Text="Save" />

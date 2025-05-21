@@ -38,6 +38,7 @@ public partial class MainPage : ContentPage
         _renderer = new GraphRenderer();
         _renderer.UpdateGraph(input);
         myGraphicsView.Drawable = _renderer;
+        EditProcessView.Closing += Closing; 
 
 #if WINDOWS
         myGraphicsView.HandlerChanged += (s, e) =>
@@ -49,11 +50,20 @@ public partial class MainPage : ContentPage
         };
 #endif
 
-        // Activate Touch events
-        myGraphicsView.StartInteraction += OnStartInteraction;
+            // Activate Touch events
+            myGraphicsView.StartInteraction += OnStartInteraction;
         myGraphicsView.DragInteraction += OnDragInteraction;
         myGraphicsView.EndInteraction += OnEndInteraction;
     }
+
+    private async void Closing(object? sender, EventArgs e)
+    {
+
+                await EditProcessView.TranslateTo(0, 0, 400, Easing.CubicIn);
+                EditProcessView.BindingContext = null;
+                EditProcessView.HideSoftKeyboard();
+
+     }
 
 #if WINDOWS
     // Allow zooming with the mouse (ctrl + Wheel)
@@ -126,6 +136,12 @@ public partial class MainPage : ContentPage
     /// <param name="e"></param>    
     async void OnEndInteraction(object sender, TouchEventArgs e)
     {
+        
+#if WINDOWS
+        var panelHeight = 410; 
+#else
+        var panelHeight = 332;// DeviceDisplay.Current.MainDisplayInfo.Density;      
+#endif
         if (_isTap && e.Touches.Length == 1)
         {
             var p = e.Touches[0];
@@ -138,13 +154,11 @@ public partial class MainPage : ContentPage
                 {
                     // TODO: Expand the bottom sheet with the selected process details
                     EditProcessView.BindingContext = new FlowProcessEditViewModel( FlowProcessManager.Instance.SelectedProcess);
-                    EditProcessView.TranslateTo(0,332 , 500, Easing.CubicOut);
+                    await EditProcessView.TranslateTo(0,panelHeight , 500, Easing.CubicOut);
                 } else
                 {
                     // TODO: Collapse the bottom sheet if no process is selected
-                    await EditProcessView.TranslateTo(0, 0, 400, Easing.CubicIn);
-                    EditProcessView.BindingContext = null;
-                    EditProcessView.HideSoftKeyboard();
+                    Closing(null, EventArgs.Empty);
                 }
 
                 myGraphicsView.Invalidate();
@@ -154,9 +168,7 @@ public partial class MainPage : ContentPage
             {
                 FlowProcessManager.Instance.SelectedProcess = null;
                 // TODO: Collapse the bottom sheet
-                await EditProcessView.TranslateTo(0, 0, 400, Easing.CubicIn);
-                EditProcessView.BindingContext = null;
-                EditProcessView.HideSoftKeyboard();
+                Closing(null, EventArgs.Empty);
                 myGraphicsView.Invalidate();
             }
         }

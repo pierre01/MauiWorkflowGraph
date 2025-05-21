@@ -55,7 +55,7 @@ public partial class FlowProcessEditViewModel : ObservableValidator
     public static ValidationResult ValidateExpression(string expression, ValidationContext context)
     {
         FlowProcessEditViewModel instance = (FlowProcessEditViewModel)context.ObjectInstance;
-        bool isValid = false; //instance.service.Validate(expression);
+        bool isValid = true; //instance.service.Validate(expression);
 
         if (isValid)
         {
