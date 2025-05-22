@@ -21,7 +21,6 @@
 						Command="{Binding SaveCommand}"
 						Clicked="OnSavedClicked"
 						HorizontalOptions="End"
-						IsEnabled="{Binding IsEditable}"
 						Text="Save" />
 			</Grid>		
 		</VerticalStackLayout>

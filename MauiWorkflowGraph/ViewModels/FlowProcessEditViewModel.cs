@@ -15,8 +15,6 @@ public partial class FlowProcessEditViewModel : ObservableValidator
 {
     private readonly FlowProcess _process;
 
-    // create an event to notify when we are closing the view
-    public event EventHandler Closing;
 
     public FlowProcessEditViewModel(FlowProcess processRule)
     {
