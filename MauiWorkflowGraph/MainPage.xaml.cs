@@ -193,19 +193,35 @@ public partial class MainPage : ContentPage
     /// </summary>
     async void OnStartSimulationClicked(object sender, EventArgs e)
     {
+        // If the edit pane is open, disable edits and the save button until the simulation is done
+        EditProcessView.IsRunning = true;
+
+        // Disable the button to prevent multiple clicks
         btnStart.IsEnabled = false;
+
+        // Run the simulation
         await SimulateNode(_renderer.Root);
-        btnStart.IsEnabled = true;
+
+        // After the simulation, wait 2 seconds before resetting the graph
         await Task.Delay(2000);
+        
+        // Reset the graph to its initial state
         _renderer.ResetStates();
+
+        // Reset the button state and redraw the graph
+        btnStart.IsEnabled = true;
         myGraphicsView.Invalidate();
+
+        // Reset the edit pane to allow edits again
+        EditProcessView.IsRunning = false;
     }
 
 
     /// <summary>
     /// Simulate node execution.
+    /// (Warning this is a recursive function)
     /// </summary>
-    /// <param name="node"></param>
+    /// <param name="node">from which node</param>
     /// <returns></returns>
     async Task SimulateNode(ProcessNode node)
     {
@@ -226,12 +242,13 @@ public partial class MainPage : ContentPage
                 break;
 
             case SequenceNode seq:
+                // Trigger processes one after the other
                 foreach (var child in seq.Children)
                     await SimulateNode(child);
                 break;
 
             case ParallelNode par:
-                // lance toutes les branches en même temps
+                // Trigger all parrallel processes simultaneously
                 var tasks = par.Branches
                                 .Select(branch => SimulateNode(branch));
                 await Task.WhenAll(tasks);

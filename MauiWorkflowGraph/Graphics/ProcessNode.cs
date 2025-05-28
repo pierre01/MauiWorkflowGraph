@@ -14,7 +14,7 @@ public enum NodeState
 /// </summary>
 public abstract class ProcessNode
 {
-    public RectF Bounds;        // Position et taille calculées
+    public RectF Bounds;        // Position and size of the node in logical coordinates
     public abstract SizeF Measure(ICanvas canvas);
     public abstract void Draw(ICanvas canvas);
     protected float FontSize = 14;

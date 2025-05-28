@@ -9,6 +9,34 @@ public partial class FlowProcessEditView : ContentView
     public FlowProcessEditView()
     {
         InitializeComponent();
+        BindingContextChanged += OnBindingContextChanged;
+    }
+
+    private void OnBindingContextChanged(object? sender, EventArgs e)
+    {
+        if (BindingContext is FlowProcessEditViewModel vm)
+        {
+            vm.IsEditable = !_isRunning;
+            NameEntry.Focus();
+        }
+    }
+
+    private bool _isRunning = false;
+    public bool IsRunning
+    {
+        get
+        {
+            return _isRunning;
+        }
+        set
+        {
+            _isRunning = value;
+            var vm = (FlowProcessEditViewModel)BindingContext;
+            if (vm != null)
+            {
+                    vm.IsEditable = !_isRunning;
+            }
+        }
     }
 
     /// <summary>
@@ -32,5 +60,10 @@ public partial class FlowProcessEditView : ContentView
             Closing?.Invoke(this, EventArgs.Empty);
         }
 
+    }
+
+    private void OnCloseClicked(object sender, EventArgs e)
+    {
+        Closing?.Invoke(this, EventArgs.Empty);
     }
 }

@@ -10,6 +10,11 @@ public class ParallelNode : ProcessNode
 
     public ParallelNode(IEnumerable<ProcessNode> branches) => Branches = branches.ToList();
 
+    /// <summary>
+    /// Measures the size of the parallel node based on its branches.
+    /// </summary>
+    /// <param name="canvas"></param>
+    /// <returns></returns>
     public override SizeF Measure(ICanvas canvas)
     {
         float totalW = 0, maxH = 0;
@@ -26,7 +31,7 @@ public class ParallelNode : ProcessNode
     public override void Draw(ICanvas canvas)
     {
 
-        // Boîte : tracer seulement top et bottom
+        // Box: draw only top and bottom
         canvas.StrokeColor = Colors.LightGray;
         canvas.StrokeSize = 4;
         canvas.DrawLine(Bounds.X, Bounds.Y, Bounds.Right, Bounds.Y);
@@ -41,11 +46,11 @@ public class ParallelNode : ProcessNode
         {
             var size = b.Measure(canvas);
 
-            // <-- Aligner chaque branche sur le haut du conteneur
+            // <-- Align each branch to the top of the container
             b.Bounds = new RectF(x, topY, size.Width, size.Height);
             b.Draw(canvas);
 
-            // Flèche depuis le haut du conteneur vers la branche
+            // Arrow from the top of the container to the branch
             float arrowX = b.Bounds.Center.X;
             canvas.DrawLine(arrowX, Bounds.Y, arrowX, b.Bounds.Y);
             canvas.FillColor = Colors.LightGray;
@@ -60,7 +65,7 @@ public class ParallelNode : ProcessNode
 
             canvas.RestoreState();
 
-            // Flèche de la fin de la branche jusqu’au bas du conteneur
+            // Arrow from the end of the branch to the bottom of the container
             float branchBottomX = b.Bounds.Center.X;
             float branchBottomY = b.Bounds.Bottom;
             canvas.DrawLine(branchBottomX, branchBottomY, branchBottomX, bottomY);

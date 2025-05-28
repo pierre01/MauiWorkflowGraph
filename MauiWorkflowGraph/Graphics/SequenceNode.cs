@@ -35,7 +35,7 @@ public class SequenceNode : ProcessNode
             c.Bounds = new RectF(cx - size.Width / 2, y, size.Width, size.Height);
             c.Draw(canvas);
 
-            // Flèche vers l’enfant suivant
+            // Arrow to the next child
             if (i < Children.Count - 1)
             {
                 float startY = c.Bounds.Bottom;
@@ -44,7 +44,7 @@ public class SequenceNode : ProcessNode
                 canvas.StrokeSize = 2;
                 canvas.DrawLine(cx, startY, cx, endY);
 
-                // Tête de flèche vers le bas
+                // Arrowhead pointing down
                 canvas.FillColor = Colors.LightGray;
                 canvas.SaveState();
                 canvas.Translate(cx, endY);
@@ -60,9 +60,10 @@ public class SequenceNode : ProcessNode
             y += size.Height + Spacing;
         }
     }
+
     public override ProcessNode HitTest(PointF point)
     {
-        // On délègue aux enfants
+        // Delegate to children
         foreach (var child in Children)
         {
             var hit = child.HitTest(point);

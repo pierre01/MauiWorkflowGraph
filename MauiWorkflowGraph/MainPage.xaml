@@ -8,7 +8,7 @@
 	<Grid>
 		<GraphicsView x:Name="myGraphicsView" HorizontalOptions="Fill" VerticalOptions="Fill" />
 		<Button x:Name="btnStart" Margin="16" Clicked="OnStartSimulationClicked"
-		        HorizontalOptions="Start" Text="Run..." VerticalOptions="Start" />
+		        HorizontalOptions="End" Text="Run..." VerticalOptions="End" />
 		<views:FlowProcessEditView x:Name="EditProcessView" HorizontalOptions="Fill" VerticalOptions="Start" Margin="{OnPlatform Android='0,-332,0,0', iOS='0,-332,0,0', WinUI='0,-410,0,0'}"  />
 	</Grid>
 </ContentPage>

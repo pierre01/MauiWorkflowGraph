@@ -13,7 +13,7 @@ public class LeafNode : ProcessNode
     public FlowProcess ProcessRule { get => _processRule; }
 
     /// <summary>
-    /// 
+    ///  select or deselect the process rule.
     /// </summary>
     public void SelectDeselect()
     {

@@ -1,13 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MauiWorkflowGraph.Models;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MauiWorkflowGraph.ViewModels;
 
@@ -51,6 +45,7 @@ public partial class FlowProcessEditViewModel : ObservableValidator
     public partial string Errors { get; set; } 
     
     [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
     public partial bool IsEditable { get; set; }
 
     /// <summary>
@@ -76,6 +71,7 @@ public partial class FlowProcessEditViewModel : ObservableValidator
     [RelayCommand(CanExecute = nameof(HasChanged))]
     private async Task Save()
     {
+
         // Validate
         ValidateAllProperties();
         if (HasErrors)
@@ -96,6 +92,10 @@ public partial class FlowProcessEditViewModel : ObservableValidator
     /// <returns>true if edited</returns>
     public bool HasChanged()
     {
+        if (!IsEditable)
+        {
+            return false;
+        }
         // check if the process has changed
         if (_process.Name != Name || _process.Description != Description || _process.Expression != Expression)
         {
