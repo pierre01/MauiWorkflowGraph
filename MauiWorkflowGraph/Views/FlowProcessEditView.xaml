@@ -75,9 +75,9 @@
 			VerticalOptions="Start"
 			WidthRequest="42" />
 		<Rectangle
-			HeightRequest="1"
+			HeightRequest="2"
 			HorizontalOptions="Fill"
-			Stroke="#867E7E"
+			Stroke="#d2c5c5"
 			VerticalOptions="End" />
 	</Grid>
 </ContentView>

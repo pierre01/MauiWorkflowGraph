@@ -52,16 +52,16 @@ public class LeafNode : ProcessNode
 
         canvas.StrokeColor = Colors.LightGray;
         canvas.StrokeSize = 2;
+        
+        // Draw the process in selected state with a dashed border and light blue fill 
         if (FlowProcessManager.Instance.SelectedProcess == _processRule)
         {
-
             canvas.StrokeDashPattern = new float[] { 4, 2 };
-            canvas.StrokeDashOffset = 0;
             canvas.FillColor = Colors.LightBlue;
         }
+        // Draw the process in executing or completed state with a solid fill
         else
         {
-            // draw no dash lines
             canvas.StrokeDashPattern = null;
             switch (State)
             {
@@ -76,6 +76,7 @@ public class LeafNode : ProcessNode
                     break;
             }
         }
+      
         canvas.FillRoundedRectangle(Bounds, 4);
         canvas.DrawRoundedRectangle(Bounds, 4);
         canvas.StrokeDashPattern = null;

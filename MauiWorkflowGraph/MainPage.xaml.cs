@@ -56,7 +56,7 @@ public partial class MainPage : ContentPage
         myGraphicsView.EndInteraction += OnEndInteraction;
     }
 
-    private async void Closing(object? sender, EventArgs e)
+    private async void Closing(object sender, EventArgs e)
     {
 
         FlowProcessManager.Instance.SelectedProcess = null;

@@ -1,5 +1,6 @@
 using CommunityToolkit.Maui.Core.Platform;
 using MauiWorkflowGraph.ViewModels;
+using System.Runtime.Versioning;
 
 namespace MauiWorkflowGraph.Views;
 public partial class FlowProcessEditView : ContentView
@@ -12,7 +13,7 @@ public partial class FlowProcessEditView : ContentView
         BindingContextChanged += OnBindingContextChanged;
     }
 
-    private void OnBindingContextChanged(object? sender, EventArgs e)
+    private void OnBindingContextChanged(object sender, EventArgs e)
     {
         if (BindingContext is FlowProcessEditViewModel vm)
         {

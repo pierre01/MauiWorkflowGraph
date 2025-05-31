@@ -69,7 +69,7 @@ public partial class FlowProcessEditViewModel : ObservableValidator
 
 
     [RelayCommand(CanExecute = nameof(HasChanged))]
-    private async Task Save()
+    private void Save()
     {
 
         // Validate
