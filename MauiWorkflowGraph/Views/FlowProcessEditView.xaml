@@ -46,6 +46,7 @@
 			<Entry
 				x:Name="ExpressionEntry"
 				IsEnabled="{Binding IsEditable}"
+				IsSpellCheckEnabled="False"
 				Text="{Binding Expression, Mode=TwoWay}" />
 
 			<Grid ColumnDefinitions="*,*" HorizontalOptions="Fill">
@@ -65,13 +66,15 @@
 					Text="Save" />
 			</Grid>
 		</VerticalStackLayout>
-		<ImageButton
+		<Button
 			Margin="0,4,4,0"
 			Clicked="OnCloseClicked"
-			HeightRequest="32"
+			Background="{AppThemeBinding Light=#F2ededec,
+		                             Dark=#F2242424}"
+			HeightRequest="42"
 			HorizontalOptions="End"
-			Source="{AppThemeBinding Light='close.png',
-		                             Dark='close_dark.png'}"
+			ImageSource="{AppThemeBinding Light='close.png',
+			                         Dark='close_dark.png'}"
 			VerticalOptions="Start"
 			WidthRequest="42" />
 		<Rectangle
