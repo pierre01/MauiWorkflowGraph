@@ -23,6 +23,7 @@
 				VerticalOptions="Start" />
 			<Entry
 				x:Name="NameEntry"
+				IsSpellCheckEnabled="False"
 				IsEnabled="{Binding IsEditable}"
 				Text="{Binding Name, Mode=TwoWay}" />
 
@@ -71,12 +72,13 @@
 			Clicked="OnCloseClicked"
 			Background="{AppThemeBinding Light=#F2ededec,
 		                             Dark=#F2242424}"
-			HeightRequest="42"
+			Padding="0"
+			HeightRequest="32"
 			HorizontalOptions="End"
 			ImageSource="{AppThemeBinding Light='close.png',
 			                         Dark='close_dark.png'}"
 			VerticalOptions="Start"
-			WidthRequest="42" />
+			WidthRequest="32" />
 		<Rectangle
 			HeightRequest="2"
 			HorizontalOptions="Fill"
