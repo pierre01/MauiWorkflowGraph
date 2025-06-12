@@ -41,7 +41,7 @@ public class LeafNode : ProcessNode
 
         var textSize = canvas.GetStringSize(Name, Font, FontSize);
 #if WINDOWS
-        return new SizeF(textSize.Height *Density + 16 , textSize.Width*Density + 24 );     
+        return new SizeF(textSize.Height+24  , textSize.Width*Density + 24 );     
 #else        
         return new SizeF(textSize.Width + 16, textSize.Height + 16);
 #endif
