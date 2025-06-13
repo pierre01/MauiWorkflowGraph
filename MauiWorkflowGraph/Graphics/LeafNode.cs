@@ -13,7 +13,7 @@ public class LeafNode : ProcessNode
     public FlowProcess ProcessRule { get => _processRule; }
 
     /// <summary>
-    /// 
+    ///  select or deselect the process rule.
     /// </summary>
     public void SelectDeselect()
     {
@@ -41,7 +41,7 @@ public class LeafNode : ProcessNode
 
         var textSize = canvas.GetStringSize(Name, Font, FontSize);
 #if WINDOWS
-        return new SizeF(textSize.Width *Density + 16 , textSize.Height*Density + 24 );     
+        return new SizeF(textSize.Width+24  , textSize.Height + 18 );     
 #else        
         return new SizeF(textSize.Width + 16, textSize.Height + 16);
 #endif
@@ -52,16 +52,16 @@ public class LeafNode : ProcessNode
 
         canvas.StrokeColor = Colors.LightGray;
         canvas.StrokeSize = 2;
+        
+        // Draw the process in selected state with a dashed border and light blue fill 
         if (FlowProcessManager.Instance.SelectedProcess == _processRule)
         {
-
             canvas.StrokeDashPattern = new float[] { 4, 2 };
-            canvas.StrokeDashOffset = 0;
             canvas.FillColor = Colors.LightBlue;
         }
+        // Draw the process in executing or completed state with a solid fill
         else
         {
-            // draw no dash lines
             canvas.StrokeDashPattern = null;
             switch (State)
             {
@@ -76,17 +76,20 @@ public class LeafNode : ProcessNode
                     break;
             }
         }
+      
         canvas.FillRoundedRectangle(Bounds, 4);
         canvas.DrawRoundedRectangle(Bounds, 4);
         canvas.StrokeDashPattern = null;
 
         // Center Text
         var textSize = canvas.GetStringSize(Name, Font, FontSize);
+#if WINDOWS
         float x = Bounds.X + (Bounds.Width - textSize.Width) / 2;
         float y = Bounds.Y + (Bounds.Height - textSize.Height) / 2;
-#if WINDOWS
         canvas.DrawString(Name, x, y-4, textSize.Width * Density, textSize.Height * Density + 8  , HorizontalAlignment.Left, VerticalAlignment.Top);
 #else        
+        float x = Bounds.X + (Bounds.Width - textSize.Width) / 2;
+        float y = Bounds.Y + (Bounds.Height - textSize.Height) / 2;
         canvas.DrawString(Name, x, y, textSize.Width * Density, textSize.Height * Density, HorizontalAlignment.Left, VerticalAlignment.Top);
 #endif
     }

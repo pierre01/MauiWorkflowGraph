@@ -10,7 +10,7 @@
             InitializeComponent();
         }
 
-        protected override Window CreateWindow(IActivationState? activationState)
+        protected override Window CreateWindow(IActivationState activationState)
         {
             //app.Services
             var window = new Window(new AppShell());

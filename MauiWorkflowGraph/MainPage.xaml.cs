@@ -1,5 +1,6 @@
 ﻿using MauiWorkflowGraph.Graphics;
 using MauiWorkflowGraph.Models;
+using MauiWorkflowGraph.ViewModels;
 // PointerRoutedEventArgs
 #if WINDOWS
 using Microsoft.UI.Xaml; // Correct namespace for UIElement in WinUI
@@ -37,6 +38,7 @@ public partial class MainPage : ContentPage
         _renderer = new GraphRenderer();
         _renderer.UpdateGraph(input);
         myGraphicsView.Drawable = _renderer;
+        EditProcessView.Closing += Closing;
 
 #if WINDOWS
         myGraphicsView.HandlerChanged += (s, e) =>
@@ -54,8 +56,19 @@ public partial class MainPage : ContentPage
         myGraphicsView.EndInteraction += OnEndInteraction;
     }
 
-    // Allow zooming with the mouse (ctrl + Wheel)
+    private async void Closing(object sender, EventArgs e)
+    {
+
+        FlowProcessManager.Instance.SelectedProcess = null;
+        myGraphicsView.Invalidate();
+        await EditProcessView.TranslateTo(0, 0, 400, Easing.CubicIn);
+        EditProcessView.BindingContext = null;
+        EditProcessView.HideSoftKeyboard();
+
+    }
+
 #if WINDOWS
+    // Allow zooming with the mouse (ctrl + Wheel)
     private void OnPointerWheelChanged(object sender, PointerRoutedEventArgs e)
     {
         // récupère le PointerPoint relatif au CanvasControl
@@ -123,8 +136,14 @@ public partial class MainPage : ContentPage
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>    
-    void OnEndInteraction(object sender, TouchEventArgs e)
+    async void OnEndInteraction(object sender, TouchEventArgs e)
     {
+
+#if WINDOWS
+        var panelHeight = 410; 
+#else
+        var panelHeight = 332;// DeviceDisplay.Current.MainDisplayInfo.Density;      
+#endif
         if (_isTap && e.Touches.Length == 1)
         {
             var p = e.Touches[0];
@@ -136,19 +155,23 @@ public partial class MainPage : ContentPage
                 if (FlowProcessManager.Instance.SelectedProcess != null)
                 {
                     // TODO: Expand the bottom sheet with the selected process details
-                } else
+                    EditProcessView.BindingContext = new FlowProcessEditViewModel(FlowProcessManager.Instance.SelectedProcess);
+                    myGraphicsView.Invalidate();
+                    await EditProcessView.TranslateTo(0, panelHeight, 500, Easing.CubicOut);
+                }
+                else
                 {
                     // TODO: Collapse the bottom sheet if no process is selected
+                    Closing(null, EventArgs.Empty);
                 }
 
-                myGraphicsView.Invalidate();
             }
             // Deselect current if tapped outside
-            if(tapped == null && FlowProcessManager.Instance.SelectedProcess !=null)
+            if (tapped == null && FlowProcessManager.Instance.SelectedProcess != null)
             {
-                FlowProcessManager.Instance.SelectedProcess = null;
+                
                 // TODO: Collapse the bottom sheet
-                myGraphicsView.Invalidate();
+                Closing(null, EventArgs.Empty);
             }
         }
         // reset des flags
@@ -170,19 +193,35 @@ public partial class MainPage : ContentPage
     /// </summary>
     async void OnStartSimulationClicked(object sender, EventArgs e)
     {
+        // If the edit pane is open, disable edits and the save button until the simulation is done
+        EditProcessView.IsRunning = true;
+
+        // Disable the button to prevent multiple clicks
         btnStart.IsEnabled = false;
+
+        // Run the simulation
         await SimulateNode(_renderer.Root);
-        btnStart.IsEnabled = true;
+
+        // After the simulation, wait 2 seconds before resetting the graph
         await Task.Delay(2000);
+        
+        // Reset the graph to its initial state
         _renderer.ResetStates();
+
+        // Reset the button state and redraw the graph
+        btnStart.IsEnabled = true;
         myGraphicsView.Invalidate();
+
+        // Reset the edit pane to allow edits again
+        EditProcessView.IsRunning = false;
     }
 
 
     /// <summary>
     /// Simulate node execution.
+    /// (Warning this is a recursive function)
     /// </summary>
-    /// <param name="node"></param>
+    /// <param name="node">from which node</param>
     /// <returns></returns>
     async Task SimulateNode(ProcessNode node)
     {
@@ -191,7 +230,7 @@ public partial class MainPage : ContentPage
             case LeafNode leaf:
                 leaf.State = NodeState.Executing;
                 myGraphicsView.Invalidate();
-                var success  = await leaf.ProcessRule.Execute();
+                var success = await leaf.ProcessRule.Execute();
                 if (!success)
                 {
                     leaf.State = NodeState.Error;
@@ -203,12 +242,13 @@ public partial class MainPage : ContentPage
                 break;
 
             case SequenceNode seq:
+                // Trigger processes one after the other
                 foreach (var child in seq.Children)
                     await SimulateNode(child);
                 break;
 
             case ParallelNode par:
-                // lance toutes les branches en même temps
+                // Trigger all parrallel processes simultaneously
                 var tasks = par.Branches
                                 .Select(branch => SimulateNode(branch));
                 await Task.WhenAll(tasks);

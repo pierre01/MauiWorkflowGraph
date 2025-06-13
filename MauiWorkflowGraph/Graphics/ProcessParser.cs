@@ -29,11 +29,11 @@ public static class ProcessParser
                 }
                 else
                 {
-                    // mot ou prochaine sous-liste
+                    // word or next sub-list
                     if (Peek() == '[') nodes.Add(ParseList());
                     else
                     {
-                        // lire nom
+                        // read name
                         var sb = new StringBuilder();
                         while (char.IsLetterOrDigit(Peek()))
                         {
@@ -46,14 +46,14 @@ public static class ProcessParser
                 if (Peek() == ',') { i++; continue; }
                 if (Peek() == ']') { i++; break; }
             }
-            // si qu’un seul enfant, on retourne directement son nœud
+            // if only one child, return its node directly
             if (nodes.Count == 1) return nodes[0];
             return new SequenceNode(nodes);
         }
         
         ProcessNode ParseParallel()
         {
-            // syntaxe: ( slice1 , slice2 , ... )
+            // syntax: ( slice1 , slice2 , ... )
             Expect('(');
             var branches = new List<ProcessNode>();
             while (true)

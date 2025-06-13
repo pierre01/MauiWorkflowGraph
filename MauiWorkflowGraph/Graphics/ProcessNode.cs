@@ -14,11 +14,11 @@ public enum NodeState
 /// </summary>
 public abstract class ProcessNode
 {
-    public RectF Bounds;        // Position et taille calculées
+    public RectF Bounds;        // Position and size of the node in logical coordinates
     public abstract SizeF Measure(ICanvas canvas);
     public abstract void Draw(ICanvas canvas);
     protected float FontSize = 14;
-    protected IFont Font = new Microsoft.Maui.Graphics.Font("OpenSans-Semibold");
+    protected IFont Font = new Microsoft.Maui.Graphics.Font("OpenSans-SemiBold");
     protected float Density = (float)DeviceDisplay.Current.MainDisplayInfo.Density;
     public abstract ProcessNode HitTest(PointF point);
     public NodeState State { get; set; } = NodeState.Idle;

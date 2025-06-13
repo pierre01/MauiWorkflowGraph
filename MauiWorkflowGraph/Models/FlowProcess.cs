@@ -16,6 +16,7 @@ public class FlowProcess
     public string Description { get; set; }
     public string Expression { get; set; }
     public string Result { get; set; }
+    
     public FlowProcess(string name, string description, string expression, string result)
     {
         Name = name;
@@ -23,7 +24,10 @@ public class FlowProcess
         Expression = expression;
         Result = result;
     }
+
+
     private Random _random = new Random();
+    
     /// <summary>
     /// Execute process or rule.
     /// </summary>

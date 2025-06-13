@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+	x:Class="MauiWorkflowGraph.Views.FlowProcessEditView"
+	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+	xmlns:vm="clr-namespace:MauiWorkflowGraph.ViewModels"
+	x:DataType="vm:FlowProcessEditViewModel">
+
+	<Grid
+		Background="{AppThemeBinding Light=#F2ededec,
+		                             Dark=#F2242424}"
+		HeightRequest="332"
+		IsClippedToBounds="True">
+		<VerticalStackLayout Margin="8">
+
+
+			<Label
+				Margin="2,2,0,2"
+				FontSize="Small"
+				HorizontalOptions="Start"
+				Text="Name"
+				VerticalOptions="Start" />
+			<Entry
+				x:Name="NameEntry"
+				IsSpellCheckEnabled="False"
+				IsEnabled="{Binding IsEditable}"
+				Text="{Binding Name, Mode=TwoWay}" />
+
+			<Label
+				Margin="2,16,0,2"
+				FontSize="Small"
+				HorizontalOptions="Start"
+				Text="Description"
+				VerticalOptions="Start" />
+			<Entry
+				x:Name="DescriptionEntry"
+				IsEnabled="{Binding IsEditable}"
+				Text="{Binding Description, Mode=TwoWay}" />
+
+			<Label
+				Margin="2,16,0,2"
+				FontSize="Small"
+				HorizontalOptions="Start"
+				Text="Expression"
+				VerticalOptions="Center" />
+			<Entry
+				x:Name="ExpressionEntry"
+				IsEnabled="{Binding IsEditable}"
+				IsSpellCheckEnabled="False"
+				Text="{Binding Expression, Mode=TwoWay}" />
+
+			<Grid ColumnDefinitions="*,*" HorizontalOptions="Fill">
+				<Label
+					Margin="2,2,0,2"
+					FontSize="Micro"
+					HorizontalOptions="Start"
+					Text="{Binding Errors}"
+					TextColor="Red"
+					VerticalOptions="Start" />
+				<Button
+					Grid.Column="1"
+					Margin="0,16"
+					Clicked="OnSavedClicked"
+					Command="{Binding SaveCommand}"
+					HorizontalOptions="End"
+					Text="Save" />
+			</Grid>
+		</VerticalStackLayout>
+		<Button
+			Margin="0,4,4,0"
+			Clicked="OnCloseClicked"
+			Background="{AppThemeBinding Light=#F2ededec,
+		                             Dark=#F2242424}"
+			Padding="0"
+			HeightRequest="32"
+			HorizontalOptions="End"
+			ImageSource="{AppThemeBinding Light='close.png',
+			                         Dark='close_dark.png'}"
+			VerticalOptions="Start"
+			WidthRequest="32" />
+		<Rectangle
+			HeightRequest="2"
+			HorizontalOptions="Fill"
+			Stroke="#d2c5c5"
+			VerticalOptions="End" />
+	</Grid>
+</ContentView>
