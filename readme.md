@@ -54,5 +54,6 @@ myGraphicsView.Drawable = _renderer;
 <img src="longstring.png" alt="Home" width="80%"/> 
 
 ## New Features:
-- **Editing Panel:** (Added - 5/20/25) the editing panel allows you to edit the rules and the execution structure. The changes are reflected in the graph immediately. 
+- **Editing Panel:** (Added - 6/13/25) the editing panel allows you to edit the rules and the execution structure. The changes are reflected in the graph immediately. 
+<img src="editpanel.png" alt="Home" width="80%"/>
 - **Editing the rules:** you can edit the name, description, expression, and result of each rule. The changes are saved in the dictionary and reflected in the graph immediately.
