@@ -41,7 +41,7 @@ public class LeafNode : ProcessNode
 
         var textSize = canvas.GetStringSize(Name, Font, FontSize);
 #if WINDOWS
-        return new SizeF(textSize.Height+24  , textSize.Width*Density + 24 );     
+        return new SizeF(textSize.Width+24  , textSize.Height + 18 );     
 #else        
         return new SizeF(textSize.Width + 16, textSize.Height + 16);
 #endif
@@ -84,9 +84,9 @@ public class LeafNode : ProcessNode
         // Center Text
         var textSize = canvas.GetStringSize(Name, Font, FontSize);
 #if WINDOWS
-        float x = Bounds.X + (Bounds.Width - textSize.Height) / 2;
-        float y = Bounds.Y + (Bounds.Height - textSize.Width) / 2;
-        canvas.DrawString(Name, x, y-4, textSize.Height * Density, textSize.Width * Density + 8  , HorizontalAlignment.Left, VerticalAlignment.Top);
+        float x = Bounds.X + (Bounds.Width - textSize.Width) / 2;
+        float y = Bounds.Y + (Bounds.Height - textSize.Height) / 2;
+        canvas.DrawString(Name, x, y-4, textSize.Width * Density, textSize.Height * Density + 8  , HorizontalAlignment.Left, VerticalAlignment.Top);
 #else        
         float x = Bounds.X + (Bounds.Width - textSize.Width) / 2;
         float y = Bounds.Y + (Bounds.Height - textSize.Height) / 2;
