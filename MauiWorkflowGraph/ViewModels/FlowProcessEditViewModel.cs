@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MauiWorkflowGraph.Models;
+using MauiWorkflowGraph.Services;
 using System.ComponentModel.DataAnnotations;
 
 namespace MauiWorkflowGraph.ViewModels;
@@ -8,10 +9,11 @@ namespace MauiWorkflowGraph.ViewModels;
 public partial class FlowProcessEditViewModel : ObservableValidator
 {
     private readonly FlowProcess _process;
+    private RulesService _rulesService;
 
-
-    public FlowProcessEditViewModel(FlowProcess processRule)
+    public FlowProcessEditViewModel(FlowProcess processRule, RulesService rulesService)
     {
+        _rulesService = rulesService;
         _process = processRule;
         Name = processRule.Name;
         Description = processRule.Description;
@@ -57,7 +59,7 @@ public partial class FlowProcessEditViewModel : ObservableValidator
     public static ValidationResult ValidateExpression(string expression, ValidationContext context)
     {
         FlowProcessEditViewModel instance = (FlowProcessEditViewModel)context.ObjectInstance;
-        bool isValid = true; //instance.service.Validate(expression);
+        bool isValid = instance._rulesService.IsValidExpression(expression);
 
         if (isValid)
         {

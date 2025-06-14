@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Maui;
+using MauiWorkflowGraph.Services;
 using Microsoft.Extensions.Logging;
 
 namespace MauiWorkflowGraph
@@ -29,7 +30,7 @@ namespace MauiWorkflowGraph
 
         public static MauiAppBuilder RegisterServices(this MauiAppBuilder mauiAppBuilder)
         {
-            //mauiAppBuilder.Services.AddTransient<SearchPageWithHandlerViewModel>();
+            mauiAppBuilder.Services.AddSingleton<RulesService>();
             return mauiAppBuilder;
         }
         public static MauiAppBuilder RegisterViewModels(this MauiAppBuilder mauiAppBuilder)
@@ -40,7 +41,7 @@ namespace MauiWorkflowGraph
         }
         public static MauiAppBuilder RegisterViews(this MauiAppBuilder mauiAppBuilder)
         {
-            //mauiAppBuilder.Services.AddTransient<WorkflowGraphPage>();
+            mauiAppBuilder.Services.AddSingleton<MainPage>();
             return mauiAppBuilder;
         }
         public static MauiAppBuilder RegisterHandlers(this MauiAppBuilder mauiAppBuilder)

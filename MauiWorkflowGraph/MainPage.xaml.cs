@@ -1,6 +1,8 @@
 ﻿using MauiWorkflowGraph.Graphics;
 using MauiWorkflowGraph.Models;
 using MauiWorkflowGraph.ViewModels;
+using MauiWorkflowGraph.Services;
+
 // PointerRoutedEventArgs
 #if WINDOWS
 using Microsoft.UI.Xaml; // Correct namespace for UIElement in WinUI
@@ -19,6 +21,7 @@ namespace MauiWorkflowGraph;
 public partial class MainPage : ContentPage
 {
     GraphRenderer _renderer;
+    RulesService _rulesService;
 
     // Flags pour détecter pan / pinch / tap
     bool _isPinching;
@@ -28,13 +31,15 @@ public partial class MainPage : ContentPage
     PointF _initialTapPoint;
     PointF _lastPanPoint;
 
-    public MainPage()
+    public MainPage(RulesService rulesService)
     {
         InitializeComponent();
+        _rulesService = rulesService;
 
         // Between square bracket are sequential processes (rules), between parenthesis are parallel ones
         // The name is the dictionary index found in FlowProcessManager.cs
         string input = "[Rule1,(Rule2,Rule3),Rule4,Rule5,([Rule6,Rule7],[Rule8,(Rule9,[Rule10,Rule11])],[Rule12,Rule13,Rule14]),Rule15]";
+
         _renderer = new GraphRenderer();
         _renderer.UpdateGraph(input);
         myGraphicsView.Drawable = _renderer;
@@ -155,7 +160,7 @@ public partial class MainPage : ContentPage
                 if (FlowProcessManager.Instance.SelectedProcess != null)
                 {
                     // TODO: Expand the bottom sheet with the selected process details
-                    EditProcessView.BindingContext = new FlowProcessEditViewModel(FlowProcessManager.Instance.SelectedProcess);
+                    EditProcessView.BindingContext = new FlowProcessEditViewModel(FlowProcessManager.Instance.SelectedProcess,_rulesService);
                     myGraphicsView.Invalidate();
                     await EditProcessView.TranslateTo(0, panelHeight, 500, Easing.CubicOut);
                 }
