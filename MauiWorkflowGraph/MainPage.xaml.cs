@@ -21,7 +21,7 @@ namespace MauiWorkflowGraph;
 public partial class MainPage : ContentPage
 {
     GraphRenderer _renderer;
-    RulesService _rulesService;
+    IRulesService _rulesService;
 
     // Flags pour détecter pan / pinch / tap
     bool _isPinching;
@@ -31,7 +31,7 @@ public partial class MainPage : ContentPage
     PointF _initialTapPoint;
     PointF _lastPanPoint;
 
-    public MainPage(RulesService rulesService)
+    public MainPage(IRulesService rulesService)
     {
         InitializeComponent();
         _rulesService = rulesService;
@@ -235,7 +235,7 @@ public partial class MainPage : ContentPage
             case LeafNode leaf:
                 leaf.State = NodeState.Executing;
                 myGraphicsView.Invalidate();
-                var success = await leaf.ProcessRule.Execute();
+                var success = await leaf.ProcessRule.Execute(_rulesService);
                 if (!success)
                 {
                     leaf.State = NodeState.Error;

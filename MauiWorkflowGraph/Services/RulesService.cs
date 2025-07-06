@@ -9,11 +9,16 @@ namespace MauiWorkflowGraph.Services
 {
     public class RulesService : IRulesService
     {
+        //Create a dictionary of variable names and their values
+        public Dictionary<string, object> Variables { get; set; } = new Dictionary<string, object>();
+
+
+
         // Matches simple lambdas like:
         //   x => x + 1
         //   (a, b) => a * b
         private static readonly Regex LambdaRegex = new Regex(
-            @"^\s*                                   # optional leading whitespace
+            @"^\s*                          # optional leading whitespace
       (?:                                   # either
         [a-zA-Z_]\w*                        #   single identifier
       |                                     # or
@@ -28,6 +33,11 @@ namespace MauiWorkflowGraph.Services
             RegexOptions.Compiled
             | RegexOptions.IgnorePatternWhitespace
         );
+
+        public string GetResult(string expression)
+        {
+            return "Result from expression";
+        }
 
         /// <summary>
         /// Validates if the input string is a valid lambda expression.

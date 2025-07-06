@@ -18,6 +18,11 @@
             // Center the window.X and Y on the main display
             window.X = (DeviceDisplay.MainDisplayInfo.Width - newWidth) / 2;
             window.Y = (DeviceDisplay.MainDisplayInfo.Height - newHeight) / 2;
+            //window.AddOverlay(new WindowOverlay(window)
+            //{
+            //    BackgroundColor = Colors.Transparent,
+            //    IsEnabled = true
+            //});
 
             // Lock the window size
             window.Width = newWidth;

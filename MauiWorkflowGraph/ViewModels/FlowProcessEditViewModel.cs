@@ -9,9 +9,9 @@ namespace MauiWorkflowGraph.ViewModels;
 public partial class FlowProcessEditViewModel : ObservableValidator
 {
     private readonly FlowProcess _process;
-    private RulesService _rulesService;
+    private IRulesService _rulesService;
 
-    public FlowProcessEditViewModel(FlowProcess processRule, RulesService rulesService)
+    public FlowProcessEditViewModel(FlowProcess processRule, IRulesService rulesService)
     {
         _rulesService = rulesService;
         _process = processRule;

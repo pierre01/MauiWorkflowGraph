@@ -30,7 +30,7 @@ namespace MauiWorkflowGraph
 
         public static MauiAppBuilder RegisterServices(this MauiAppBuilder mauiAppBuilder)
         {
-            mauiAppBuilder.Services.AddSingleton<RulesService>();
+            mauiAppBuilder.Services.AddSingleton<IRulesService,RulesService>();
             return mauiAppBuilder;
         }
         public static MauiAppBuilder RegisterViewModels(this MauiAppBuilder mauiAppBuilder)
