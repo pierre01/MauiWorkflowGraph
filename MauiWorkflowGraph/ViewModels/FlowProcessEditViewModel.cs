@@ -59,14 +59,14 @@ public partial class FlowProcessEditViewModel : ObservableValidator
     public static ValidationResult ValidateExpression(string expression, ValidationContext context)
     {
         FlowProcessEditViewModel instance = (FlowProcessEditViewModel)context.ObjectInstance;
-        bool isValid = instance._rulesService.IsValidExpression(expression);
+        var res  = instance._rulesService.IsValidExpression(expression);
 
-        if (isValid)
+        if (res.IsValid)
         {
             return ValidationResult.Success;
         }
 
-        return new("The expression is not valid");
+        return new(res.Error);
     }
 
 
@@ -81,6 +81,9 @@ public partial class FlowProcessEditViewModel : ObservableValidator
             Errors = string.Join(Environment.NewLine, GetErrors().Select(e => e.ErrorMessage));
             return;
         }
+        
+        // Clear any previous validation messages
+        Errors = string.Empty;
 
         // Save the process
         _process.Name = Name;

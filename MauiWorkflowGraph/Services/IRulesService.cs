@@ -2,7 +2,7 @@
 {
     public interface IRulesService
     {
-        bool IsValidExpression(string input);
+        (bool IsValid,string Error) IsValidExpression(string input);
         string GetResult(string expression);
     }
 }
