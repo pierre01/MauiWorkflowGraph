@@ -60,13 +60,13 @@
                     VerticalOptions="Start" />
                 <HorizontalStackLayout Grid.Column="1" HorizontalOptions="End">
                     <Button
-                        Margin="0,16,16,0"
+                        Margin="0,16,8,0"
                         Clicked="OnSavedClicked"
                         Command="{Binding SaveCommand}"
                         MinimumWidthRequest="80"
                         Text="Save" />
                     <Button
-                        Margin="0,16,8,0"
+                        Margin="0,16,0,0"
                         MinimumWidthRequest="80"
                         Clicked="OnCloseClicked"
                         Text="Cancel" />

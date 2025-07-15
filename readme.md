@@ -44,4 +44,4 @@ As well as a simulated execution.
 
 https://github.com/user-attachments/assets/8c72dae7-0419-4574-939a-b456c1d15a96
 
-- **Editing the rules:** you can edit the name, description, expression, and result of each rule. The changes are saved in the dictionary and reflected in the graph immediately.
+- **Editing the rules:** you can edit the name, description, Lambda expression, and result of each rule. The changes are saved in the dictionary and reflected in the graph immediately.

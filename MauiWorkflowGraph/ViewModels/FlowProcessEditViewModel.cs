@@ -101,6 +101,7 @@ public partial class FlowProcessEditViewModel : ObservableValidator
         {
             return false;
         }
+
         // check if the process has changed
         if (_process.Name != Name || _process.Description != Description || _process.Expression != Expression)
         {
