@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MauiWorkflowGraph.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,11 +33,15 @@ public class FlowProcess
     /// Execute process or rule.
     /// </summary>
     /// <returns> true if successful</returns>
-    public virtual async Task<bool> Execute()
+    public virtual async Task<bool> Execute(IRulesService rulesService)
     {
+
+       // Simulate some processing
+       // Then execute the expression (simulated here with a delay)
+        Result = rulesService.GetResult(Expression);
         await Task.Delay(_random.Next(600, 2000)); // wait for 0.6 to 2 seconds
-        // Simulate some processing
-        Console.WriteLine($"Executing {Name} with expression: {Expression}");
+
+        Console.WriteLine($"Executing {Name} with expression: {Expression} returned {Result}");
         // Here you would add the actual logic to execute the process
         return true; // Return true if successful, false otherwise
     }

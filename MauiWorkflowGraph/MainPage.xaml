@@ -4,6 +4,7 @@
              xmlns:vm="clr-namespace:MauiWorkflowGraph.ViewModels"
              xmlns:views="clr-namespace:MauiWorkflowGraph.Views"
 			  x:DataType="vm:FlowProcessEditViewModel"
+             Background="#00000000"
 			 >
 	<Grid>
 		<GraphicsView x:Name="myGraphicsView" HorizontalOptions="Fill" VerticalOptions="Fill" />
