@@ -68,7 +68,7 @@ namespace MauiWorkflowGraph.Services
         }
 
         /// <summary>
-        /// Validates if the input string is a valid lambda expression.
+        /// Validates if the input string is a valid lambda expression and if the variable parameters are defined.
         /// </summary>
         /// <param name="input"></param>
         /// <returns>(true, "") if valid, (false, errorMessage) if not</returns>
