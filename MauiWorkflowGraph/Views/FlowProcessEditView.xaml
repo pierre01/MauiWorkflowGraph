@@ -63,9 +63,11 @@
                         Margin="0,16,16,0"
                         Clicked="OnSavedClicked"
                         Command="{Binding SaveCommand}"
+                        MinimumWidthRequest="80"
                         Text="Save" />
                     <Button
                         Margin="0,16,8,0"
+                        MinimumWidthRequest="80"
                         Clicked="OnCloseClicked"
                         Text="Cancel" />
                 </HorizontalStackLayout>

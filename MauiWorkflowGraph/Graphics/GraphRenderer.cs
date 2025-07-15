@@ -14,6 +14,11 @@ public partial class GraphRenderer : ObservableObject, IDrawable
     {
     }
 
+    /// <summary>
+    /// Updates the graph with a new input string and returns the root node of the updated graph.
+    /// </summary>
+    /// <param name="newInput">The new input string used to update the graph structure.</param>
+    /// <returns>The root node of the updated graph.</returns>
     public ProcessNode UpdateGraph(string newInput)
     {
         _input = newInput;
@@ -39,17 +44,21 @@ public partial class GraphRenderer : ObservableObject, IDrawable
         return Root.HitTest(logicalPoint);
     }
 
-
+    /// <summary>
+    ///   Draws the graph on the given canvas.
+    /// </summary>
+    /// <param name="canvas"></param>
+    /// <param name="dirtyRect"></param>
     public void Draw(ICanvas canvas, RectF dirtyRect)
     {
         if (Root == null)
             return;
         canvas.SaveState();
-        // applique zoom et translation
+        // apply scale and offset
         canvas.Translate(Offset.X, Offset.Y);
         canvas.Scale(Scale, Scale);
 
-        // mesurer et centrer
+        // measure the root node
         var size = Root.Measure(canvas);
 
         Root.Bounds = new RectF(
@@ -57,7 +66,7 @@ public partial class GraphRenderer : ObservableObject, IDrawable
             dirtyRect.Center.Y - size.Height/2,
             size.Width, size.Height);
 
-        // dessiner
+        // draw the root node
         Root.Draw(canvas);
 
         canvas.RestoreState();

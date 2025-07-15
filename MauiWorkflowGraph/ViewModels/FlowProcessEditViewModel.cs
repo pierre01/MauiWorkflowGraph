@@ -63,7 +63,7 @@ public partial class FlowProcessEditViewModel : ObservableValidator
 
         if (res.IsValid)
         {
-            return ValidationResult.Success;
+           return ValidationResult.Success;
         }
 
         return new(res.Error);
@@ -106,6 +106,10 @@ public partial class FlowProcessEditViewModel : ObservableValidator
         {
             return true;
         }
+
+        // Clear any previous validation messages
+        Errors = string.Empty;
+
         return false;
 
     }
