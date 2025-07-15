@@ -42,6 +42,6 @@ As well as a simulated execution.
 ## New Features:
 - **Editing Panel:** (Added - 6/13/25) the editing panel allows you to edit the rules and the execution structure. The changes are reflected in the graph immediately after saving and validating. 
 
-![](PanelOpenClose.mp4){#id .class width=350 height=800px}
+https://github.com/user-attachments/assets/8c72dae7-0419-4574-939a-b456c1d15a96
 
 - **Editing the rules:** you can edit the name, description, expression, and result of each rule. The changes are saved in the dictionary and reflected in the graph immediately.
